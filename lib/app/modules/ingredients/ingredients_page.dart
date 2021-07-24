@@ -8,7 +8,7 @@ import 'ingredients_store.dart';
 
 class IngredientsPage extends StatefulWidget {
   final String title;
-  const IngredientsPage({Key key, this.title = "Ingredientes"}) : super(key: key);
+  const IngredientsPage({this.title = "Ingredientes"}) : super();
 
   @override
   _IngredientsPageState createState() => _IngredientsPageState();
@@ -33,7 +33,7 @@ class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsSto
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print('FloatingActionButton pressed ...');
+          Modular.to.pushNamed("create_ingredient");
         },
         backgroundColor: primaryColor,
         elevation: 8,
