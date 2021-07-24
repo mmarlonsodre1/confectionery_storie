@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 
 class GridButtonWidget extends StatefulWidget {
   GridButtonWidget({
-    Key key,
     this.title,
     this.onTap,
-  }) : super(key: key);
+  }) : super();
 
-  final String title;
-  final Function onTap;
+  final String? title;
+  final GestureTapCallback? onTap;
 
   @override
   _GridButtonWidgetState createState() => _GridButtonWidgetState();
@@ -39,7 +38,7 @@ class _GridButtonWidgetState extends State<GridButtonWidget> {
               child: Align(
                 alignment: Alignment(0, 0),
                 child: Text(
-                  widget.title,
+                  widget.title ?? '',
                   textAlign: TextAlign.center,
                   style: textTitle1
                 ),

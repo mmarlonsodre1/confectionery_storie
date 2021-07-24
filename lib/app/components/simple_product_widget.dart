@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 
 class SimpleProductWidget extends StatefulWidget {
   SimpleProductWidget({
-    Key key,
     this.title,
     this.onTap,
-  }) : super(key: key);
+  }) : super();
 
-  final String title;
-  final Function onTap;
+  final String? title;
+  final GestureTapCallback? onTap;
 
   @override
   _SimpleProductWidgetState createState() => _SimpleProductWidgetState();
@@ -38,7 +37,7 @@ class _SimpleProductWidgetState extends State<SimpleProductWidget> {
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
-                    widget.title,
+                    widget.title ?? '',
                     style: textBody1,
                   ),
                 ),
