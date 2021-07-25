@@ -8,10 +8,11 @@ class CreateIngredientStore extends NotifierStore<Exception, CreateIngredientEnt
     update(CreateIngredientEntity()..unity = unity);
   }
 
-  Future<void> postIngredient(String name, double quantity, double amount) async {
+  Future<void> postIngredient(String name, double quantity, double amount, bool hasMustIngredients) async {
     state.name = name;
     state.quantity = quantity;
     state.amount = amount;
+    state.hasMustIngredients = hasMustIngredients;
     update(state);
   }
 }

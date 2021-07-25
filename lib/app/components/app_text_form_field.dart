@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppTextFormField extends StatefulWidget {
-  final GlobalKey<FormState>? key;
+  final GlobalKey<FormState>? refKey;
   final TextEditingController? controller;
   final String? labelText;
   final String? hintText;
@@ -26,7 +26,7 @@ class AppTextFormField extends StatefulWidget {
         this.onFieldSubmitted,
         this.textInputType = TextInputType.text,
         this.prefixText = '',
-        this.key
+        this.refKey
       })
       : super();
 
@@ -39,6 +39,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: widget.refKey,
       autovalidateMode: AutovalidateMode.always,
       onChanged: () {
         try {
@@ -52,7 +53,6 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         ),
         child: Container(
           child: TextFormField(
-            key: widget.key,
             decoration: InputDecoration(
               labelText: widget.labelText,
               hintText: widget.hintText,

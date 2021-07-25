@@ -1,10 +1,10 @@
 import 'package:confectionery_storie/app/components/app_text_form_field.dart';
 import 'package:confectionery_storie/app/utils/color.dart';
 import 'package:confectionery_storie/app/utils/text_style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 import 'create_ingredient_entity.dart';
 import 'create_ingredient_store.dart';
 
@@ -18,27 +18,78 @@ class CreateIngredientPage extends StatefulWidget {
 
 class _CreateIngredientPageState
     extends ModularState<CreateIngredientPage, CreateIngredientStore> {
-  final scaffoldKey = new GlobalKey<ScaffoldState>();
+  static final _scaffoldKey = new Key("scaffoldKey");
   var _nameController = new TextEditingController();
-  var _nameKey = new GlobalKey<FormState>();
+  static final GlobalKey<FormState> _nameKey = new GlobalKey<FormState>(debugLabel: "_nameKey");
   var _quantityController = new TextEditingController();
-  var _quantityKey = new GlobalKey<FormState>();
+  static final GlobalKey<FormState> _quantityKey = new GlobalKey<FormState>(debugLabel: "_quantityKey");
   var _amountController = new TextEditingController();
-  var _amountKey = new GlobalKey<FormState>();
+  static final GlobalKey<FormState> _amountKey = new GlobalKey<FormState>(debugLabel: "_amountKey");
   bool _isEnableButton = false;
+  bool _hasMustIngredients = false;
 
   void _enableButton() {
     setState(() {
-      _isEnableButton = _nameKey.currentState!.validate() == true
-          && _quantityKey.currentState!.validate() == true
-          && _amountKey.currentState!.validate() == true;
+      _isEnableButton = _nameKey.currentState?.validate() == true && (
+          _hasMustIngredients || (_quantityKey.currentState?.validate() == true
+              && _amountKey.currentState?.validate() == true)
+      );
     });
+  }
+
+  Widget _showIngredientInfo(CreateIngredientEntity data) {
+    return Container(
+      child: Column(
+        children: [
+          Container(
+            height: 64,
+          ),
+
+          CupertinoSlidingSegmentedControl(
+              children: {
+                0: Text('grama'),
+                1: Text('mililítro'),
+                2: Text('unidade'),
+              },
+              groupValue: data.unity,
+              onValueChanged: (int? index) {
+                store.setUnity(index ?? 0);
+              }),
+          Container(height: 32,),
+          AppTextFormField(
+            refKey: _quantityKey,
+            labelText: 'Quantidade',
+            hintText: '500',
+            controller: _quantityController,
+            isEnable: true,
+            onSaved: (String? value) async {
+              _enableButton();
+            },
+            suffixText: data.unity == 0 ? 'g' : (data.unity == 1 ? 'ml' : "un"),
+            textInputType: TextInputType.number,
+          ),
+          Container(height: 16,),
+          AppTextFormField(
+            refKey: _amountKey,
+            labelText: 'Valor',
+            hintText: '10.00',
+            controller: _amountController,
+            isEnable: true,
+            onSaved: (String? value) async {
+              _enableButton();
+            },
+            prefixText: "R\$ ",
+            textInputType: TextInputType.number,
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: primaryColor,
         automaticallyImplyLeading: true,
@@ -54,14 +105,14 @@ class _CreateIngredientPageState
           child: Align(
             alignment: Alignment(0, -1.0),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
               child: ScopedBuilder<CreateIngredientStore, Exception, CreateIngredientEntity>(
                 store: store,
                 onState: (_, data) {
                   return Column(
                     children: [
                       AppTextFormField(
-                        key: _nameKey,
+                        refKey: _nameKey,
                         labelText: 'Nome',
                         hintText: 'Margarina',
                         controller: _nameController,
@@ -70,56 +121,35 @@ class _CreateIngredientPageState
                           _enableButton();
                         },
                       ),
-                      Container(height: 64,),
-                      ToggleSwitch(
-                        minWidth: 100,
-                        labels: ['grama', 'mililítro', 'unidade'],
-                        initialLabelIndex: data.unity,
-                        activeBgColor: [green],
-                        inactiveBgColor: lightBlue,
-                        inactiveFgColor: white,
-                        totalSwitches: 3,
-                        onToggle: (index) {
-                          store.setUnity(index);
-                        },
-                      ),
-                      Container(height: 32,),
-                      AppTextFormField(
-                        key: _quantityKey,
-                        labelText: 'Quantidade',
-                        hintText: '500',
-                        controller: _quantityController,
-                        isEnable: true,
-                        onSaved: (String? value) async {
-                          _enableButton();
-                        },
-                        suffixText: data.unity == 0 ? 'g' : (data.unity == 1 ? 'ml' : "un"),
-                        textInputType: TextInputType.number,
-                      ),
                       Container(height: 16,),
-                      AppTextFormField(
-                        key: _amountKey,
-                        labelText: 'Valor',
-                        hintText: '10.00',
-                        controller: _amountController,
-                        isEnable: true,
-                        onSaved: (String? value) async {
-                          _enableButton();
-                        },
-                        prefixText: "R\$ ",
-                        textInputType: TextInputType.number,
+                      MergeSemantics(
+                        child: ListTile(
+                          title: const Text('Feito a partir de outros ingredientes?'),
+                          trailing: CupertinoSwitch(
+                            value: _hasMustIngredients,
+                            onChanged: (bool value) {
+                              setState(() { _hasMustIngredients = value; });
+                              _enableButton();
+                            },
+                          ),
+                          onTap: () {
+                            setState(() { _hasMustIngredients = !_hasMustIngredients; });
+                            _enableButton();
+                          },
+                        ),
                       ),
+                      !_hasMustIngredients ? _showIngredientInfo(data) : Container(),
                       Expanded(child: Container(),),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: ElevatedButton(
+                        child: CupertinoButton(
+                          color: primaryColor,
                           child: Container(
                             width: double.maxFinite,
-                            height: 48,
                             child: Align(
                               alignment: Alignment(0,0),
                               child: Text(
-                                  'CRIAR INGREDIENTE'
+                                  'Criar ingrediente'
                               )
                             )
                           ),
@@ -127,7 +157,8 @@ class _CreateIngredientPageState
                             store.postIngredient(
                               _nameController.text,
                               double.parse(_quantityController.text),
-                              double.parse(_amountController.text)
+                              double.parse(_amountController.text),
+                              _hasMustIngredients
                             );
                           } : null,
                         ),

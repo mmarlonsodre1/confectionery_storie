@@ -17,6 +17,9 @@ createIngredientModelEntityFromJson(CreateIngredientEntity data, Map<String, dyn
 				? double.tryParse(json['amount'])
 				: json['amount'].toDouble();
 	}
+	if (json['hasMustIngredients'] != null) {
+		data.unity = json['hasMustIngredients'].toBool();
+	}
 	return data;
 }
 
@@ -26,5 +29,6 @@ Map<String, dynamic> createIngredientModelEntityToJson(CreateIngredientEntity en
 	data['unity'] = entity.unity;
 	data['quantity'] = entity.quantity;
 	data['amount'] = entity.amount;
+	data['hasMustIngredients'] = entity.hasMustIngredients;
 	return data;
 }
