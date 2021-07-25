@@ -1,6 +1,4 @@
-import 'package:confectionery_storie/generated/json/base/json_convert_content.dart';
-
-class CreateIngredientEntity with JsonConvert<CreateIngredientEntity> {
+class CreateIngredientEntity {
 	String? name;
 	int unity = 0;
 	double? quantity;

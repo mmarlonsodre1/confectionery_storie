@@ -1,21 +1,22 @@
+import 'package:confectionery_storie/app/modules/ingredients/ingredient_entity.dart';
 import 'package:confectionery_storie/app/utils/color.dart';
 import 'package:confectionery_storie/app/utils/text_style.dart';
 import 'package:flutter/material.dart';
 
-class SimpleProductWidget extends StatefulWidget {
-  SimpleProductWidget({
-    this.title,
+class SimpleIngredientWidget extends StatefulWidget {
+  SimpleIngredientWidget({
+    this.ingredient,
     this.onTap,
   }) : super();
 
-  final String? title;
-  final GestureTapCallback? onTap;
+  final IngredientEntity? ingredient;
+  final Function(IngredientEntity?)? onTap;
 
   @override
-  _SimpleProductWidgetState createState() => _SimpleProductWidgetState();
+  _SimpleIngredientWidgetState createState() => _SimpleIngredientWidgetState();
 }
 
-class _SimpleProductWidgetState extends State<SimpleProductWidget> {
+class _SimpleIngredientWidgetState extends State<SimpleIngredientWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,7 +27,9 @@ class _SimpleProductWidgetState extends State<SimpleProductWidget> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: InkWell(
-        onTap: widget.onTap,
+        onTap: () {
+          widget.onTap?.call(widget.ingredient);
+        },
         child: Container(
           constraints: BoxConstraints(
             minHeight: 80
@@ -37,7 +40,7 @@ class _SimpleProductWidgetState extends State<SimpleProductWidget> {
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
-                    widget.title ?? '',
+                    widget.ingredient?.name ?? '',
                     style: textBody1,
                   ),
                 ),

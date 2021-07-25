@@ -54,14 +54,7 @@ class _ProductsPageState extends ModularState<ProductsPage, ProductsStore> {
                 child: ListView(
                   padding: EdgeInsets.zero,
                   scrollDirection: Axis.vertical,
-                  children: [
-                    SimpleProductWidget(
-                      title: 'Produto1',
-                    ),
-                    SimpleProductWidget(
-                      title: 'Produto2',
-                    )
-                  ],
+                  children: [],
                 ),
               ),
             )

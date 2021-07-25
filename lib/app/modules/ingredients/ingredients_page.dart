@@ -3,7 +3,9 @@ import 'package:confectionery_storie/app/utils/color.dart';
 import 'package:confectionery_storie/app/utils/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_triple/flutter_triple.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'ingredient_entity.dart';
 import 'ingredients_store.dart';
 
 class IngredientsPage extends StatefulWidget {
@@ -19,6 +21,16 @@ class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsSto
 
   @override
   Widget build(BuildContext context) {
+    List<SimpleIngredientWidget> _ingredients(List<IngredientEntity> items) {
+      return items.map((ingredient) =>
+          SimpleIngredientWidget(
+          ingredient: ingredient,
+          onTap: (item) {
+
+          },
+      )).toList();
+    }
+
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -50,19 +62,15 @@ class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsSto
               alignment: Alignment(0, 0),
               child: Padding(
                 padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  scrollDirection: Axis.vertical,
-                  children: [
-                    SimpleProductWidget(
-                      title: 'Ingrediente 1 asda  asdas asd ad a ad asdasdasd a a a ds \na dasdadasdada \n asdasdasd',
-                      onTap: () {},
-                    ),
-                    SimpleProductWidget(
-                      title: 'Ingrediente 2',
-                      onTap: () {},
-                    )
-                  ],
+                child: ScopedBuilder<IngredientsStore, Exception, List<IngredientEntity>>(
+                  store: store,
+                  onState: (_, data) {
+                    return ListView(
+                      padding: EdgeInsets.zero,
+                      scrollDirection: Axis.vertical,
+                      children: _ingredients(data),
+                    );
+                  }
                 ),
               ),
             )
