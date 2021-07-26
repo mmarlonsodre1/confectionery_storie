@@ -11,19 +11,19 @@ class IngredientsStore extends NotifierStore<Exception, List<IngredientEntity>> 
       true,
       [
         IngredientEntity(
-            "Ingrediente 1",
+            "Ingrediente 3",
             0,
-            1.0,
+            3.0,
             1.0,
             true,
             []
-        )
+        ),
       ]
     ),
     IngredientEntity(
-        "Ingrediente 1",
+        "Ingrediente 2",
         0,
-        1.0,
+        2.0,
         1.0,
         false,
         []

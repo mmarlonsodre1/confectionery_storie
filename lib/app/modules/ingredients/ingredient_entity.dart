@@ -1,4 +1,5 @@
 class IngredientEntity{
+	String? id;
 	String? name;
 	int? unity;
 	double? quantity;
@@ -8,7 +9,4 @@ class IngredientEntity{
 
 	IngredientEntity(this.name, this.unity, this.quantity, this.amount,
       this.hasMustIngredients, this.ingredients);
-
-	IngredientEntity empty() => IngredientEntity(null, null, null, null, null, null);
-
 }

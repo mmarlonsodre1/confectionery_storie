@@ -13,6 +13,8 @@ class AppTextFormField extends StatefulWidget {
   final ValueChanged<String>? onFieldSubmitted;
   final TextInputType textInputType;
   final String prefixText;
+  final double horizontalPadding;
+  final bool showError;
 
   AppTextFormField(
       {
@@ -26,7 +28,9 @@ class AppTextFormField extends StatefulWidget {
         this.onFieldSubmitted,
         this.textInputType = TextInputType.text,
         this.prefixText = '',
-        this.refKey
+        this.refKey,
+        this.horizontalPadding = 16.0,
+        this.showError = true
       })
       : super();
 
@@ -47,9 +51,9 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         } catch (_) {}
       },
       child: Padding(
-        padding: const EdgeInsets.only(
-          right: 16.0,
-          left: 16.0
+        padding: EdgeInsets.only(
+          right: widget.horizontalPadding,
+          left: widget.horizontalPadding
         ),
         child: Container(
           child: TextFormField(
@@ -67,13 +71,14 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             keyboardType: widget.textInputType,
             autofocus: widget.autoFocus,
             validator: (String? value) {
+              if (!widget.showError) return null;
               if (widget.textInputType == TextInputType.number &&
                   (
                       double.tryParse(value!.trim()) == null ||
                       double.tryParse(value.trim())! <= 0.0
                   )
               ) {
-                return 'Necessário vser valor numérico e maior que 0';
+                return 'Necessário ser valor numérico e maior que 0';
               } else if (widget.textInputType == TextInputType.text &&
                   value?.trim() == ''
               ) {
