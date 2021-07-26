@@ -84,6 +84,7 @@ class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsSto
       return items.map((ingredient) =>
           SimpleIngredientWidget(
           ingredient: ingredient,
+          showPrice: true,
           onTap: (item) {
             if (widget.isSelection == true) {
               _showQuantityDialog(ingredient, context);

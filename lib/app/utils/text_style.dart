@@ -18,3 +18,9 @@ TextStyle textBody1 = GoogleFonts.openSans(
     color: Color(0xFF303030),
     fontWeight: FontWeight.normal
 );
+
+TextStyle textBody1Bold = GoogleFonts.openSans(
+    fontSize: 14,
+    color: Color(0xFF303030),
+    fontWeight: FontWeight.w600
+);

@@ -47,9 +47,18 @@ class _SimpleIngredientWidgetState extends State<SimpleIngredientWidget> {
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      widget.ingredient?.name ?? '',
-                      style: textBody1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.ingredient?.name ?? '',
+                          style: textBody1Bold,
+                        ),
+                        widget.showPrice ? Text(
+                          "Valor: R\$ ${widget.ingredient?.amount ?? 0.0}",
+                          style: textBody1,
+                        ) : Container(),
+                      ],
                     ),
                   ),
                 ),
