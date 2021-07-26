@@ -11,9 +11,8 @@ import 'ingredient_into_ingredient_store.dart';
 
 class IngredientIntoIngredientPage extends StatefulWidget {
   final IngredientEntity ingredient;
-  final String? title;
   const IngredientIntoIngredientPage(
-      {required this.ingredient, this.title = "Ingredientes"})
+      {required this.ingredient})
       : super();
 
   @override
@@ -60,7 +59,7 @@ class _IngredientIntoIngredientPageState extends ModularState<
         backgroundColor: primaryColor,
         automaticallyImplyLeading: true,
         title: Text(
-          'Ingredientes',
+          widget.ingredient.name ?? "",
           style: textTitle2,
         ),
         centerTitle: true,
