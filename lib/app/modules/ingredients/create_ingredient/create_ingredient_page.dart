@@ -5,12 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
+import '../ingredient_entity.dart';
 import 'create_ingredient_entity.dart';
 import 'create_ingredient_store.dart';
 
 class CreateIngredientPage extends StatefulWidget {
-  final String title;
-  const CreateIngredientPage({this.title = "Criar Ingrediente"}) : super();
+  final IngredientEntity? ingredient;
+  const CreateIngredientPage({this.ingredient}) : super();
 
   @override
   _CreateIngredientPageState createState() => _CreateIngredientPageState();
@@ -35,6 +36,18 @@ class _CreateIngredientPageState
               && _amountKey.currentState?.validate() == true)
       );
     });
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.ingredient != null) {
+      _nameController.text = widget.ingredient?.name ?? "";
+      _quantityController.text = widget.ingredient?.quantity.toString() ?? "";
+      _amountController.text = widget.ingredient?.amount.toString() ?? "";
+      store.setUnity(widget.ingredient?.unity ?? 0);
+    }
   }
 
   Widget _showIngredientInfo(CreateIngredientEntity data) {
@@ -94,7 +107,7 @@ class _CreateIngredientPageState
         backgroundColor: primaryColor,
         automaticallyImplyLeading: true,
         title: Text(
-          widget.title,
+          "Criar Ingrediente",
           style: textTitle2,
         ),
         centerTitle: true,
@@ -154,12 +167,22 @@ class _CreateIngredientPageState
                             )
                           ),
                           onPressed: _isEnableButton == true ? () {
-                            store.postIngredient(
-                              _nameController.text,
-                              double.parse(_quantityController.text),
-                              double.parse(_amountController.text),
-                              _hasMustIngredients
-                            );
+                            if (widget.ingredient != null) {
+                              store.updateIngredient(
+                                  _nameController.text,
+                                  double.parse(_quantityController.text),
+                                  double.parse(_amountController.text),
+                                  _hasMustIngredients
+                              );
+                            } else {
+                              store.postIngredient(
+                                  _nameController.text,
+                                  double.parse(_quantityController.text),
+                                  double.parse(_amountController.text),
+                                  _hasMustIngredients
+                              );
+                            }
+                            Modular.to.pop();
                           } : null,
                         ),
                       )

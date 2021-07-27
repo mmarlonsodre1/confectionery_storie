@@ -91,6 +91,8 @@ class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsSto
             }
             else if (item?.hasMustIngredients == true)
               Modular.to.pushNamed("ingredient_into_ingredient", arguments: item);
+            else if (item?.hasMustIngredients == false)
+              Modular.to.pushNamed("create_ingredient", arguments: item);
           },
       )).toList();
     }

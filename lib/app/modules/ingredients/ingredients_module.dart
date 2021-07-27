@@ -18,7 +18,7 @@ import 'package:flutter_modular/flutter_modular.dart';
   @override
   final List<ModularRoute> routes = [
     ChildRoute("/ingredients", child: (_, args) => IngredientsPage(isSelection: args.data ?? false,)),
-    ChildRoute("/create_ingredient", child: (_, args) => CreateIngredientPage()),
+    ChildRoute("/create_ingredient", child: (_, args) => CreateIngredientPage(ingredient: args.data,)),
     ChildRoute("/ingredient_into_ingredient", child: (_, args) => IngredientIntoIngredientPage(ingredient: args.data)),
   ];
  }
