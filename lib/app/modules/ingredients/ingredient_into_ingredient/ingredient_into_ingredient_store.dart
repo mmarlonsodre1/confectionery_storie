@@ -35,7 +35,7 @@ class IngredientIntoIngredientStore extends NotifierStore<Exception, IngredientE
         _ingredientBox.put(id, this.state);
       } else await state.save();
     }
-    getIngredient(_ingredientId ?? "");
+    await getIngredient(_ingredientId ?? "");
   }
 
   Future<void> updateName(String name) async {
@@ -43,7 +43,6 @@ class IngredientIntoIngredientStore extends NotifierStore<Exception, IngredientE
     newState.name = name;
     setIngredient(newState);
   }
-
 
   Future<void> addIngredient(IngredientEntity ingredient) async {
     if (ingredientEntity?.ingredients == null) ingredientEntity?.ingredients = [];

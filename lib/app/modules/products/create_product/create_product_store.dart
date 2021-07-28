@@ -89,12 +89,10 @@ class CreateProductStore extends NotifierStore<Exception, ProductEntity> with Me
 
   @override
   Future<void> undo() async {
-    super.undo();
     if (_lastDeleteIngredient != null) {
       _productEntity?.ingredients?.add(_lastDeleteIngredient!);
       await _productEntity?.save();
       await _updateValue(_productEntity?.ingredients);
-      await getProduct(_productId ?? "");
     }
   }
 }
