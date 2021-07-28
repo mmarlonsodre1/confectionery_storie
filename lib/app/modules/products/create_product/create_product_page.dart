@@ -40,7 +40,7 @@ class _CreateProductPageState extends ModularState<CreateProductPage, CreateProd
   void initState() {
     super.initState();
     if (widget.product != null) {
-      store.setProduct(widget.product!);
+      store.getProduct(widget.product?.id ?? "");
       _nameController.text = widget.product?.name ?? "";
       _percentController.text = widget.product?.percent?.toString() ?? "";
     }
@@ -55,6 +55,23 @@ class _CreateProductPageState extends ModularState<CreateProductPage, CreateProd
                 showArrow: false,
                 showQuantity: true,
                 onTap: (item) {},
+                onDeleteAction: (item) async {
+                  await store.deleteIngredient(item, context);
+                  setState(() {});
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('${ingredient.name} apagado(a)'),
+                        duration: Duration(seconds: 3),
+                        action: SnackBarAction(
+                          label: 'Voltar ação',
+                          onPressed: () async {
+                            await store.undo();
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                  );
+                },
               ))
           .toList();
     }
@@ -76,6 +93,7 @@ class _CreateProductPageState extends ModularState<CreateProductPage, CreateProd
           var ingredient = await Modular.to.pushNamed<IngredientEntity?>("ingredients", arguments: true);
           if(ingredient != null) await store.addIngredient(ingredient);
           setState(() {});
+          store.getProduct(widget.product?.id ?? "");
         },
         backgroundColor: primaryColor,
         elevation: 8,
@@ -117,6 +135,7 @@ class _CreateProductPageState extends ModularState<CreateProductPage, CreateProd
                         isEnable: true,
                         onSaved: (String? value) async {
                           _enableButton();
+                          store.updateName(value ?? "");
                         },
                       ),
                       Container(height: 16.0,),
@@ -131,8 +150,7 @@ class _CreateProductPageState extends ModularState<CreateProductPage, CreateProd
                           _enableButton();
                           if (_percentKey.currentState?.validate() == true) {
                             if (value != null)
-                              store.updatePercent(
-                                  double.tryParse(value) ?? 0.0);
+                              store.updatePercent((double.tryParse(value) ?? 0.0), null);
                           }
                         },
                         suffixText: "%",

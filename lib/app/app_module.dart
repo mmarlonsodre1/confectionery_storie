@@ -1,5 +1,6 @@
 import 'package:confectionery_storie/app/modules/home/home_store.dart';
 import 'package:confectionery_storie/app/modules/login/login_store.dart';
+import 'package:confectionery_storie/app/modules/products/create_product/create_product_module.dart';
 import 'package:confectionery_storie/app/modules/products/products_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -17,6 +18,7 @@ class AppModule extends Module {
   final List<ModularRoute> routes = [
     ModuleRoute(Modular.initialRoute, module: HomeModule()),
     ModuleRoute("/ingredients", module: IngredientsModule()),
-    ModuleRoute("/products", module: ProductsModule())
+    ModuleRoute("/products", module: ProductsModule()),
+    ModuleRoute("/create_product", module: CreateProductsModule())
   ];
 }

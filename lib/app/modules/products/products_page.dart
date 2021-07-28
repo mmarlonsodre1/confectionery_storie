@@ -19,14 +19,39 @@ class ProductsPage extends StatefulWidget {
 class _ProductsPageState extends ModularState<ProductsPage, ProductsStore> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+
+  @override
+  void initState() {
+    super.initState();
+    store.getProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<SimpleProductWidget> _products(List<ProductEntity> items) {
       return items.map((product) =>
           SimpleProductWidget(
             product: product,
-            onTap: (item) {
-                Modular.to.pushNamed("create_product", arguments: item);
+            onTap: (item) async {
+                await Modular.to.pushNamed("create_product", arguments: item);
+                store.getProducts();
+            },
+            onDeleteAction: (item) async {
+              await store.deleteProduct(item, context);
+              setState(() {});
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('${product.name} apagado(a)'),
+                  duration: Duration(seconds: 3),
+                  action: SnackBarAction(
+                    label: 'Voltar ação',
+                    onPressed: () async {
+                      await store.undo();
+                      setState(() {});
+                    },
+                  ),
+                ),
+              );
             },
           )).toList();
     }
@@ -45,8 +70,9 @@ class _ProductsPageState extends ModularState<ProductsPage, ProductsStore> {
         elevation: 4,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Modular.to.pushNamed("/create_product");
+        onPressed: () async {
+          await Modular.to.pushNamed("/create_product");
+          await store.getProducts();
         },
         backgroundColor: primaryColor,
         elevation: 8,
