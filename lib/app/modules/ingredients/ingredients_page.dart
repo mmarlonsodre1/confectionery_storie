@@ -69,11 +69,14 @@ class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsSto
                   child: Text('Confirmar'),
                   onPressed: _isEnableDialogButton ? () {
                     var quantity = double.tryParse(_quantityController.text);
+                    var amount = ingredient.hasMustIngredients == true
+                        ? (ingredient.amount ?? 0.0) * (quantity ?? 0.0)
+                        : ((ingredient.amount ?? 0.0)/(ingredient.quantity ?? 0.0)) * (quantity ?? 0.0);
                     var newIngredient = new IngredientEntity(
                         ingredient.name,
                         ingredient.unity,
                         quantity,
-                        ((ingredient.amount ?? 0.0)/(ingredient.quantity ?? 0.0)) * (quantity ?? 0.0),
+                        amount,
                         ingredient.hasMustIngredients,
                         ingredient.ingredients
                     );
