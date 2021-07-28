@@ -1,12 +1,12 @@
 import 'package:confectionery_storie/app/modules/ingredients/create_ingredient/create_ingredient_entity.dart';
 import 'package:confectionery_storie/app/modules/ingredients/ingredient_entity.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 
 class CreateIngredientStore extends NotifierStore<Exception, CreateIngredientEntity> {
   CreateIngredientStore() : super(CreateIngredientEntity());
 
-  var _ingredientBox = Hive.box('ingredient');
+  var _ingredientBox = Hive.box('box');
 
   Future<void> setUnity(int unity) async {
     update(CreateIngredientEntity()..unity = unity);

@@ -4,7 +4,7 @@ import 'package:confectionery_storie/app/modules/products/product_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'app/app_module.dart';
@@ -29,8 +29,7 @@ void main() async {
   Hive.init(dir.path);
   Hive.registerAdapter(ProductEntityAdapter());
   Hive.registerAdapter(IngredientEntityAdapter());
-  await Hive.openBox('product', encryptionCipher: HiveAesCipher(encryptionKey));
-  await Hive.openBox('ingredient', encryptionCipher: HiveAesCipher(encryptionKey));
+  await Hive.openBox('box', encryptionCipher: HiveAesCipher(encryptionKey));
 
   runApp(
       ModularApp(module: AppModule(), child: AppWidget())

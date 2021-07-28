@@ -2,19 +2,19 @@ import 'package:confectionery_storie/app/modules/ingredients/ingredient_entity.d
 import 'package:confectionery_storie/app/modules/products/product_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 
 class CreateProductStore extends NotifierStore<Exception, ProductEntity> with MementoMixin{
   CreateProductStore() : super(ProductEntity(null, null, null, []));
 
-  var _productBox = Hive.box('product');
+  var _productBox = Hive.box('box');
   String? _productId;
   IngredientEntity? _lastDeleteIngredient;
   ProductEntity? _productEntity;
 
   Future<void> getProduct(String id) async {
     _productId = id;
-    _productEntity = _productBox.values.cast<ProductEntity>()
+    _productEntity = _productBox.values.whereType<ProductEntity>()
         .where((item) => item.id == id).first;
     update(_productEntity ?? ProductEntity(null, null, null, []));
   }

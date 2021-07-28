@@ -8,14 +8,14 @@ class IngredientIntoIngredientStore extends NotifierStore<Exception, IngredientE
   IngredientIntoIngredientStore() : super(IngredientEntity(null, null, null, null, null, null));
 
   var _nullIngredient = IngredientEntity(null, null, null, null, null, null);
-  var _ingredientBox = Hive.box('ingredient');
+  var _ingredientBox = Hive.box('box');
   String? _ingredientId;
   IngredientEntity? _lastDeleteIngredient;
   IngredientEntity? ingredientEntity;
 
   Future<void> getIngredient(String id) async {
     _ingredientId = id;
-    ingredientEntity = _ingredientBox.values.cast<IngredientEntity>()
+    ingredientEntity = _ingredientBox.values.whereType<IngredientEntity>()
         .where((item) => item.id == id).first;
     update(ingredientEntity ?? _nullIngredient, force: true);
   }

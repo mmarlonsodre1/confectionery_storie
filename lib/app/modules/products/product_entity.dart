@@ -1,9 +1,9 @@
 import 'package:confectionery_storie/app/modules/ingredients/ingredient_entity.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 part 'product_entity.g.dart';
 
 @HiveType(typeId: 0)
-class ProductEntity  extends HiveObject{
+class ProductEntity extends HiveObject{
 	@HiveField(0)
 	String? id;
 
