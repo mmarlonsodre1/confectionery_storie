@@ -113,7 +113,7 @@ class _IngredientIntoIngredientPageState extends ModularState<
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
-                              "Valor Total: R\$ ${data.amount}",
+                              "Valor Total: R\$ ${data.amount?.toStringAsFixed(2) ?? 0.0}",
                               style: textBody1,
                               textAlign: TextAlign.end,
                             ),
