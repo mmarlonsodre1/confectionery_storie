@@ -1,23 +1,28 @@
 import 'package:confectionery_storie/app/modules/ingredients/ingredient_entity.dart';
-import 'package:confectionery_storie/app/modules/products/product_entity.dart';
 import 'package:confectionery_storie/app/utils/color.dart';
 import 'package:confectionery_storie/app/utils/text_style.dart';
 import 'package:flutter/material.dart';
 
-class SimpleProductWidget extends StatefulWidget {
-  SimpleProductWidget({
-    this.product,
+class SimpleIngredientWidget extends StatefulWidget {
+  SimpleIngredientWidget({
+    this.ingredient,
     this.onTap,
+    this.showArrow = true,
+    this.showQuantity = false,
+    this.showPrice = false
   }) : super();
 
-  final ProductEntity? product;
-  final Function(ProductEntity?)? onTap;
+  final IngredientEntity? ingredient;
+  final Function(IngredientEntity?)? onTap;
+  final bool showArrow;
+  final bool showQuantity;
+  final bool showPrice;
 
   @override
-  _SimpleProductWidgetState createState() => _SimpleProductWidgetState();
+  _SimpleIngredientWidgetState createState() => _SimpleIngredientWidgetState();
 }
 
-class _SimpleProductWidgetState extends State<SimpleProductWidget> {
+class _SimpleIngredientWidgetState extends State<SimpleIngredientWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,7 +36,7 @@ class _SimpleProductWidgetState extends State<SimpleProductWidget> {
         ),
         child: InkWell(
           onTap: () {
-            widget.onTap?.call(widget.product);
+            widget.onTap?.call(widget.ingredient);
           },
           child: Container(
             constraints: BoxConstraints(
@@ -46,13 +51,13 @@ class _SimpleProductWidgetState extends State<SimpleProductWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.product?.name ?? '',
+                          widget.ingredient?.name ?? '',
                           style: textBody1Bold,
                         ),
-                        Text(
-                          "Valor: R\$ ${widget.product?.amount?.toStringAsFixed(2) ?? 0.0}",
+                        widget.showPrice ? Text(
+                          "Valor: R\$ ${widget.ingredient?.amount?.toStringAsFixed(2) ?? 0.0}",
                           style: textBody1,
-                        ),
+                        ) : Container(),
                       ],
                     ),
                   ),
@@ -64,13 +69,23 @@ class _SimpleProductWidgetState extends State<SimpleProductWidget> {
                       bottom: 16.0,
                       right: 16.0
                     ),
-                    child: Container(
+                    child: widget.showArrow == true ?
+                    Container(
                       child: Icon(
                         Icons.arrow_forward_ios,
                         color: black,
                         size: 24,
                       ),
-                    ),
+                    ) : widget.showQuantity == true ?
+                      Container(
+                        child: Text(
+                          "${widget.ingredient?.quantity} ${
+                              widget.ingredient?.unity == 0 ? 'g'
+                                  : (widget.ingredient?.unity == 1 ? 'ml' : "un")
+                          }",
+                          style: textBody1,
+                        ),
+                    ) : Container(),
                   ),
               ],
             ),

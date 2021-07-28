@@ -3,7 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
  
  import 'ingredient_into_ingredient_page.dart';
   
- class IngredientsModule extends Module {
+ class IngredientIntoIngredientModule extends Module {
    @override
    final List<Bind> binds = [
     Bind.lazySingleton((i) => IngredientIntoIngredientStore()),

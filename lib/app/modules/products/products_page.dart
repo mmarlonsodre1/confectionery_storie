@@ -1,8 +1,10 @@
 import 'package:confectionery_storie/app/components/simple_product_widget.dart';
+import 'package:confectionery_storie/app/modules/products/product_entity.dart';
 import 'package:confectionery_storie/app/utils/color.dart';
 import 'package:confectionery_storie/app/utils/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_triple/flutter_triple.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'products_store.dart';
 
@@ -19,6 +21,16 @@ class _ProductsPageState extends ModularState<ProductsPage, ProductsStore> {
 
   @override
   Widget build(BuildContext context) {
+    List<SimpleProductWidget> _products(List<ProductEntity> items) {
+      return items.map((product) =>
+          SimpleProductWidget(
+            product: product,
+            onTap: (item) {
+                Modular.to.pushNamed("create_product", arguments: item);
+            },
+          )).toList();
+    }
+
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -34,7 +46,7 @@ class _ProductsPageState extends ModularState<ProductsPage, ProductsStore> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print('FloatingActionButton pressed ...');
+          Modular.to.pushNamed("/create_product");
         },
         backgroundColor: primaryColor,
         elevation: 8,
@@ -51,10 +63,15 @@ class _ProductsPageState extends ModularState<ProductsPage, ProductsStore> {
               alignment: Alignment(0, 0),
               child: Padding(
                 padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  scrollDirection: Axis.vertical,
-                  children: [],
+                child: ScopedBuilder<ProductsStore, Exception, List<ProductEntity>>(
+                    store: store,
+                    onState: (_, data) {
+                      return ListView(
+                        padding: EdgeInsets.zero,
+                        scrollDirection: Axis.vertical,
+                        children: _products(data),
+                      );
+                    }
                 ),
               ),
             )

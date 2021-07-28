@@ -15,6 +15,7 @@ class AppTextFormField extends StatefulWidget {
   final String prefixText;
   final double horizontalPadding;
   final bool showError;
+  final bool isPercentage;
 
   AppTextFormField(
       {
@@ -30,7 +31,8 @@ class AppTextFormField extends StatefulWidget {
         this.prefixText = '',
         this.refKey,
         this.horizontalPadding = 16.0,
-        this.showError = true
+        this.showError = true,
+        this.isPercentage = false
       })
       : super();
 
@@ -72,13 +74,11 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             autofocus: widget.autoFocus,
             validator: (String? value) {
               if (!widget.showError) return null;
-              if (widget.textInputType == TextInputType.number &&
-                  (
-                      double.tryParse(value!.trim()) == null ||
-                      double.tryParse(value.trim())! <= 0.0
-                  )
-              ) {
-                return 'Necessário ser valor numérico e maior que 0';
+              if (widget.textInputType == TextInputType.number) {
+                  if (double.tryParse(value!.trim()) == null) return 'Campo vazio';
+                  else if (!widget.isPercentage
+                      && double.tryParse(value.trim())! <= 0.0)
+                    return 'Necessário ser valor numérico e maior que 0';
               } else if (widget.textInputType == TextInputType.text &&
                   value?.trim() == ''
               ) {

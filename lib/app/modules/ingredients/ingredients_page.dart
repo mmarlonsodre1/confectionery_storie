@@ -1,5 +1,5 @@
 import 'package:confectionery_storie/app/components/app_text_form_field.dart';
-import 'package:confectionery_storie/app/components/simple_product_widget.dart';
+import 'package:confectionery_storie/app/components/simple_ingredient_widget.dart';
 import 'package:confectionery_storie/app/utils/color.dart';
 import 'package:confectionery_storie/app/utils/text_style.dart';
 import 'package:flutter/cupertino.dart';

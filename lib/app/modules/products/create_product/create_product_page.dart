@@ -1,43 +1,49 @@
 import 'package:confectionery_storie/app/components/app_text_form_field.dart';
 import 'package:confectionery_storie/app/components/simple_ingredient_widget.dart';
+import 'package:confectionery_storie/app/modules/ingredients/ingredient_entity.dart';
+import 'package:confectionery_storie/app/modules/products/product_entity.dart';
 import 'package:confectionery_storie/app/utils/color.dart';
 import 'package:confectionery_storie/app/utils/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../ingredient_entity.dart';
-import 'ingredient_into_ingredient_store.dart';
+import 'create_product_store.dart';
 
-class IngredientIntoIngredientPage extends StatefulWidget {
-  final IngredientEntity ingredient;
-  const IngredientIntoIngredientPage(
-      {required this.ingredient})
+class CreateProductPage extends StatefulWidget {
+  final ProductEntity? product;
+  const CreateProductPage(
+      {this.product})
       : super();
 
   @override
-  _IngredientIntoIngredientPageState createState() =>
-      _IngredientIntoIngredientPageState();
+  _CreateProductPageState createState() =>
+      _CreateProductPageState();
 }
 
-class _IngredientIntoIngredientPageState extends ModularState<
-    IngredientIntoIngredientPage, IngredientIntoIngredientStore> {
+class _CreateProductPageState extends ModularState<CreateProductPage, CreateProductStore> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var _nameController = new TextEditingController();
   final _nameKey = GlobalKey<FormState>();
+  var _percentController = new TextEditingController();
+  final _percentKey = GlobalKey<FormState>();
   bool _isEnableButton = false;
 
   void _enableButton() {
     setState(() {
-      _isEnableButton = _nameKey.currentState?.validate() == true;
+      _isEnableButton = _nameKey.currentState?.validate() == true
+        && _percentKey.currentState?.validate() == true;
     });
   }
 
   @override
   void initState() {
     super.initState();
-    store.setIngredient(widget.ingredient);
-    _nameController.text = widget.ingredient.name ?? "";
+    if (widget.product != null) {
+      store.setProduct(widget.product!);
+      _nameController.text = widget.product?.name ?? "";
+      _percentController.text = widget.product?.percent?.toString() ?? "";
+    }
   }
 
   @override
@@ -59,7 +65,7 @@ class _IngredientIntoIngredientPageState extends ModularState<
         backgroundColor: primaryColor,
         automaticallyImplyLeading: true,
         title: Text(
-          widget.ingredient.name ?? "",
+          widget.product?.name ?? "Criar Produto",
           style: textTitle2,
         ),
         centerTitle: true,
@@ -79,7 +85,7 @@ class _IngredientIntoIngredientPageState extends ModularState<
           size: 24,
         ),
       ),
-      body: ScopedBuilder<IngredientIntoIngredientStore, Exception, IngredientEntity>(
+      body: ScopedBuilder<CreateProductStore, Exception, ProductEntity>(
         store: store,
         onState: (_, data) {
           return SafeArea(
@@ -96,7 +102,7 @@ class _IngredientIntoIngredientPageState extends ModularState<
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
-                              "Valor Total: R\$ ${widget.ingredient.amount}",
+                              "Valor Total: R\$ ${widget.product?.amount?.toStringAsFixed(2) ?? 0.0}",
                               style: textBody1,
                               textAlign: TextAlign.end,
                             ),
@@ -106,12 +112,31 @@ class _IngredientIntoIngredientPageState extends ModularState<
                       AppTextFormField(
                         refKey: _nameKey,
                         labelText: 'Nome',
-                        hintText: 'Margarina',
+                        hintText: 'Bolo do pote',
                         controller: _nameController,
                         isEnable: true,
                         onSaved: (String? value) async {
                           _enableButton();
                         },
+                      ),
+                      Container(height: 16.0,),
+                      AppTextFormField(
+                        refKey: _percentKey,
+                        labelText: 'Porcentagem de lucro',
+                        hintText: '40',
+                        controller: _percentController,
+                        isEnable: true,
+                        isPercentage: true,
+                        onSaved: (String? value) async {
+                          _enableButton();
+                          if (_percentKey.currentState?.validate() == true) {
+                            if (value != null)
+                              store.updatePercent(
+                                  double.tryParse(value) ?? 0.0);
+                          }
+                        },
+                        suffixText: "%",
+                        textInputType: TextInputType.number,
                       ),
                       Container(height: 16,),
                       Expanded(

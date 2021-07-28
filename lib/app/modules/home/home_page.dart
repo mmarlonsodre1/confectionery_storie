@@ -38,7 +38,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                 child: GridButtonWidget(
                   title: 'Produtos',
                   onTap: () {
-
+                    Modular.to.pushNamed("products");
                   },
                 ),
               )
