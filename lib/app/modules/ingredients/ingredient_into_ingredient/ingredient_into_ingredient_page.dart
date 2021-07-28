@@ -85,7 +85,7 @@ class _IngredientIntoIngredientPageState extends ModularState<
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           var ingredient = await Modular.to.pushNamed<IngredientEntity?>("ingredients", arguments: true);
-          if(ingredient != null) await store.addIngredient(ingredient);
+          if(ingredient != null) await store.addIngredient(ingredient, context);
           setState(() {});
         },
         backgroundColor: primaryColor,

@@ -44,11 +44,19 @@ class IngredientIntoIngredientStore extends NotifierStore<Exception, IngredientE
     setIngredient(newState);
   }
 
-  Future<void> addIngredient(IngredientEntity ingredient) async {
-    if (ingredientEntity?.ingredients == null) ingredientEntity?.ingredients = [];
-    ingredientEntity?.ingredients?.add(ingredient);
-    await ingredientEntity?.save();
-    await _updateValue(ingredientEntity?.ingredients);
+  Future<void> addIngredient(IngredientEntity ingredient, BuildContext context) async {
+    if (ingredient.id == (_ingredientId ?? "")) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Impossível adicionar ingrediente dentro dele mesmo'),
+        ),
+      );
+    } else {
+      if (ingredientEntity?.ingredients == null) ingredientEntity?.ingredients = [];
+      ingredientEntity?.ingredients?.add(ingredient);
+      await ingredientEntity?.save();
+      await _updateValue(ingredientEntity?.ingredients);
+    }
   }
 
   Future<void> _updateValue(List<IngredientEntity>? ingredients) async {
