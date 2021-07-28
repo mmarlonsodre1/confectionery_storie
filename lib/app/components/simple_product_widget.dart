@@ -8,10 +8,12 @@ class SimpleProductWidget extends StatefulWidget {
   SimpleProductWidget({
     this.product,
     this.onTap,
+    required this.onDeleteAction,
   }) : super();
 
   final ProductEntity? product;
   final Function(ProductEntity?)? onTap;
+  final Function(ProductEntity?) onDeleteAction;
 
   @override
   _SimpleProductWidgetState createState() => _SimpleProductWidgetState();
@@ -33,37 +35,37 @@ class _SimpleProductWidgetState extends State<SimpleProductWidget> {
           onTap: () {
             widget.onTap?.call(widget.product);
           },
-          child: Container(
-            constraints: BoxConstraints(
-              minHeight: 80
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.product?.name ?? '',
-                          style: textBody1Bold,
-                        ),
-                        Text(
-                          "Valor: R\$ ${widget.product?.amount?.toStringAsFixed(2) ?? 0.0}",
-                          style: textBody1,
-                        ),
-                      ],
+          child: Dismissible(
+            key: UniqueKey(),
+            background: Container(color: red),
+            onDismissed: (direction) {
+              widget.onDeleteAction.call(widget.product);
+            },
+            child: Container(
+              constraints: BoxConstraints(minHeight: 80),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.product?.name ?? '',
+                            style: textBody1Bold,
+                          ),
+                          Text(
+                            "Valor: R\$ ${widget.product?.amount?.toStringAsFixed(2) ?? 0.0}",
+                            style: textBody1,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-
                   Padding(
-                    padding: EdgeInsets.only(
-                      top: 16.0,
-                      bottom: 16.0,
-                      right: 16.0
-                    ),
+                    padding:
+                        EdgeInsets.only(top: 16.0, bottom: 16.0, right: 16.0),
                     child: Container(
                       child: Icon(
                         Icons.arrow_forward_ios,
@@ -72,7 +74,8 @@ class _SimpleProductWidgetState extends State<SimpleProductWidget> {
                       ),
                     ),
                   ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

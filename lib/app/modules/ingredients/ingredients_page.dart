@@ -97,17 +97,35 @@ class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsSto
           SimpleIngredientWidget(
           ingredient: ingredient,
           showPrice: true,
-          onTap: (item) {
+          onTap: (item) async {
             if (widget.isSelection == true) {
               _showQuantityDialog(ingredient, context);
             }
-            else if (item?.hasMustIngredients == true)
-              Modular.to.pushNamed("ingredient_into_ingredient", arguments: item);
-            else if (item?.hasMustIngredients == false)
-              Modular.to.pushNamed("create_ingredient", arguments: item);
+            else if (item?.hasMustIngredients == true) {
+              await Modular.to.pushNamed(
+                  "ingredient_into_ingredient", arguments: item);
+              store.getIngredients();
+            } else if (item?.hasMustIngredients == false) {
+              await Modular.to.pushNamed("create_ingredient", arguments: item);
+              store.getIngredients();
+            }
           },
-          onDeleteAction: (item) {
-            store.deleteIngredient(item, context);
+          onDeleteAction: (item) async {
+            await store.deleteIngredient(item, context);
+            setState(() {});
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('${ingredient.name} apagado(a)'),
+                duration: Duration(seconds: 3),
+                action: SnackBarAction(
+                  label: 'Voltar ação',
+                  onPressed: () async {
+                    await store.undo();
+                    setState(() {});
+                  },
+                ),
+              ),
+            );
           },
       )).toList();
     }

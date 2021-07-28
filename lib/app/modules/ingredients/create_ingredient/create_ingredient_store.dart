@@ -19,13 +19,14 @@ class CreateIngredientStore extends NotifierStore<Exception, CreateIngredientEnt
       ingredientEntity.quantity = quantity;
       ingredientEntity.amount = amount;
       ingredientEntity.hasMustIngredients = hasMustIngredients;
+      ingredientEntity.unity = hasMustIngredients ? 3 : unity;
       ingredientEntity.save();
     } else {
       state.name = name;
       state.quantity = quantity;
       state.amount = amount;
       state.hasMustIngredients = hasMustIngredients;
-      var ingredient = IngredientEntity(name, unity, quantity, amount, hasMustIngredients, null);
+      var ingredient = IngredientEntity(name, hasMustIngredients ? 3 : unity, quantity, amount, hasMustIngredients, null);
       var id = DateTime
           .now()
           .toUtc()

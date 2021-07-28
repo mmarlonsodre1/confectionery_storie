@@ -20,26 +20,14 @@ class IngredientsStore extends NotifierStore<Exception, List<IngredientEntity>> 
     if(ingredient != null) {
       await ingredient.delete();
       _lastDeleteIngredient = ingredient;
-      getIngredients();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${ingredient.name} apagado(a)'),
-          duration: Duration(seconds: 2),
-          action: SnackBarAction(
-            label: 'Voltar ação',
-            onPressed: () {
-              this.undo();
-            },
-          ),
-        ),
-      );
+      await getIngredients();
     }
   }
 
   @override
-  void undo() async {
+  Future<void> undo() async {
     super.undo();
-    await _lastDeleteIngredient?.save();
-    getIngredients();
+    _ingredientBox.put(_lastDeleteIngredient?.id, _lastDeleteIngredient);
+    await getIngredients();
   }
 }
