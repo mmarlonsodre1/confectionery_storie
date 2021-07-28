@@ -4,19 +4,21 @@ import 'package:confectionery_storie/app/utils/text_style.dart';
 import 'package:flutter/material.dart';
 
 class SimpleIngredientWidget extends StatefulWidget {
-  SimpleIngredientWidget({
-    this.ingredient,
-    this.onTap,
-    this.showArrow = true,
-    this.showQuantity = false,
-    this.showPrice = false
-  }) : super();
+  SimpleIngredientWidget(
+      {this.ingredient,
+      this.onTap,
+      this.showArrow = true,
+      this.showQuantity = false,
+      this.showPrice = false,
+      required this.onDeleteAction})
+      : super();
 
   final IngredientEntity? ingredient;
   final Function(IngredientEntity?)? onTap;
   final bool showArrow;
   final bool showQuantity;
   final bool showPrice;
+  final Function(IngredientEntity?) onDeleteAction;
 
   @override
   _SimpleIngredientWidgetState createState() => _SimpleIngredientWidgetState();
@@ -38,56 +40,58 @@ class _SimpleIngredientWidgetState extends State<SimpleIngredientWidget> {
           onTap: () {
             widget.onTap?.call(widget.ingredient);
           },
-          child: Container(
-            constraints: BoxConstraints(
-              minHeight: 80
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.ingredient?.name ?? '',
-                          style: textBody1Bold,
-                        ),
-                        widget.showPrice ? Text(
-                          "Valor: R\$ ${widget.ingredient?.amount?.toStringAsFixed(2) ?? 0.0}",
-                          style: textBody1,
-                        ) : Container(),
-                      ],
-                    ),
-                  ),
-                ),
-
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 16.0,
-                      bottom: 16.0,
-                      right: 16.0
-                    ),
-                    child: widget.showArrow == true ?
-                    Container(
-                      child: Icon(
-                        Icons.arrow_forward_ios,
-                        color: black,
-                        size: 24,
+          child: Dismissible(
+            key: UniqueKey(),
+            background: Container(color: red),
+            onDismissed: (direction) {
+              widget.onDeleteAction.call(widget.ingredient);
+            },
+            child: Container(
+              constraints: BoxConstraints(minHeight: 80),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.ingredient?.name ?? '',
+                            style: textBody1Bold,
+                          ),
+                          widget.showPrice
+                              ? Text(
+                                  "Valor: R\$ ${widget.ingredient?.amount?.toStringAsFixed(2) ?? 0.0}",
+                                  style: textBody1,
+                                )
+                              : Container(),
+                        ],
                       ),
-                    ) : widget.showQuantity == true ?
-                      Container(
-                        child: Text(
-                          "${widget.ingredient?.quantity} ${
-                              widget.ingredient?.unity == 0 ? 'g'
-                                  : (widget.ingredient?.unity == 1 ? 'ml' : "un")
-                          }",
-                          style: textBody1,
-                        ),
-                    ) : Container(),
+                    ),
                   ),
-              ],
+                  Padding(
+                    padding:
+                        EdgeInsets.only(top: 16.0, bottom: 16.0, right: 16.0),
+                    child: widget.showArrow == true
+                        ? Container(
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              color: black,
+                              size: 24,
+                            ),
+                          )
+                        : widget.showQuantity == true
+                            ? Container(
+                                child: Text(
+                                  "${widget.ingredient?.quantity} ${widget.ingredient?.unity == 0 ? 'g' : (widget.ingredient?.unity == 1 ? 'ml' : "un")}",
+                                  style: textBody1,
+                                ),
+                              )
+                            : Container(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

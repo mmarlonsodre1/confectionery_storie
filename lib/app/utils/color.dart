@@ -7,3 +7,4 @@ Color transparent = Color (0xFFFFFFFFFF);
 Color whiteBackground = Color(0xFFF5F5F5);
 Color black = Color(0xFF000000);
 Color green = Color(0xFF4CAF50);
+Color red = Color(0xFFF44336);

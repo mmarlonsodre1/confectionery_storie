@@ -36,7 +36,7 @@ class _IngredientIntoIngredientPageState extends ModularState<
   @override
   void initState() {
     super.initState();
-    store.setIngredient(widget.ingredient);
+    store.getIngredient(widget.ingredient.id ?? "");
     _nameController.text = widget.ingredient.name ?? "";
   }
 
@@ -49,6 +49,23 @@ class _IngredientIntoIngredientPageState extends ModularState<
                 showArrow: false,
                 showQuantity: true,
                 onTap: (item) {},
+                onDeleteAction: (item) async {
+                  await store.deleteIngredient(item, context);
+                  setState(() {});
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('${ingredient.name} apagado(a)'),
+                      duration: Duration(seconds: 3),
+                      action: SnackBarAction(
+                        label: 'Voltar ação',
+                        onPressed: () async {
+                          await store.undo();
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                  );
+                },
               ))
           .toList();
     }
@@ -96,7 +113,7 @@ class _IngredientIntoIngredientPageState extends ModularState<
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
-                              "Valor Total: R\$ ${widget.ingredient.amount}",
+                              "Valor Total: R\$ ${data.amount}",
                               style: textBody1,
                               textAlign: TextAlign.end,
                             ),
@@ -111,6 +128,7 @@ class _IngredientIntoIngredientPageState extends ModularState<
                         isEnable: true,
                         onSaved: (String? value) async {
                           _enableButton();
+                          store.updateName(value ?? "");
                         },
                       ),
                       Container(height: 16,),

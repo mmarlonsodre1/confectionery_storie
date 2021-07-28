@@ -162,26 +162,22 @@ class _CreateIngredientPageState
                             child: Align(
                               alignment: Alignment(0,0),
                               child: Text(
-                                  'Criar ingrediente'
+                                  widget.ingredient != null ?
+                                    'Atualizar Ingrediente' : 'Criar ingrediente'
                               )
                             )
                           ),
                           onPressed: _isEnableButton == true ? () {
-                            if (widget.ingredient != null) {
-                              store.updateIngredient(
-                                  _nameController.text,
-                                  double.parse(_quantityController.text),
-                                  double.parse(_amountController.text),
-                                  _hasMustIngredients
-                              );
-                            } else {
-                              store.postIngredient(
-                                  _nameController.text,
-                                  double.parse(_quantityController.text),
-                                  double.parse(_amountController.text),
-                                  _hasMustIngredients
-                              );
-                            }
+                            var quantity = double.tryParse(_quantityController.text) ?? 0.0;
+                            var amount = double.tryParse(_amountController.text) ?? 0.0;
+                            store.postIngredient(
+                                _nameController.text,
+                                data.unity,
+                                quantity,
+                                amount,
+                                _hasMustIngredients,
+                                widget.ingredient
+                            );
                             Modular.to.pop();
                           } : null,
                         ),

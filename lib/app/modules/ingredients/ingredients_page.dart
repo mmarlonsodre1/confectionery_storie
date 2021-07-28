@@ -25,6 +25,12 @@ class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsSto
   var _quantityController = new TextEditingController();
   bool _isEnableDialogButton = false;
 
+  @override
+  void initState() {
+    super.initState();
+    store.getIngredients();
+  }
+
   Future<void> _showQuantityDialog(IngredientEntity ingredient, BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -62,10 +68,16 @@ class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsSto
                 TextButton(
                   child: Text('Confirmar'),
                   onPressed: _isEnableDialogButton ? () {
-                    var newIngredient = ingredient;
                     var quantity = double.tryParse(_quantityController.text);
-                    newIngredient.amount = ((ingredient.amount ?? 0.0)/(ingredient.quantity ?? 0.0)) * (quantity ?? 0.0);
-                    newIngredient.quantity = quantity;
+                    var newIngredient = new IngredientEntity(
+                        ingredient.name,
+                        ingredient.unity,
+                        quantity,
+                        ((ingredient.amount ?? 0.0)/(ingredient.quantity ?? 0.0)) * (quantity ?? 0.0),
+                        ingredient.hasMustIngredients,
+                        ingredient.ingredients
+                    );
+                    newIngredient.id = ingredient.id;
                     Modular.to.pop();
                     Modular.to.pop(newIngredient);
                   } : null,
@@ -94,6 +106,9 @@ class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsSto
             else if (item?.hasMustIngredients == false)
               Modular.to.pushNamed("create_ingredient", arguments: item);
           },
+          onDeleteAction: (item) {
+            store.deleteIngredient(item, context);
+          },
       )).toList();
     }
 
@@ -111,8 +126,10 @@ class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsSto
       ),
       floatingActionButton: widget.isSelection == false
         ? FloatingActionButton(
-          onPressed: () {
-            Modular.to.pushNamed("create_ingredient");
+          onPressed: () async {
+            await Modular.to.pushNamed("create_ingredient");
+            await store.getIngredients();
+            setState(() {});
           },
           backgroundColor: primaryColor,
           elevation: 8,
