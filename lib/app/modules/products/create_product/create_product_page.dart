@@ -109,62 +109,71 @@ class _CreateProductPageState extends ModularState<CreateProductPage, CreateProd
           return SafeArea(
             child: Container(
               child: Align(
-                alignment: Alignment(0, 0),
+                alignment: Alignment(0, -1),
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(child: Container()),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              "Valor Total: R\$ ${widget.product?.amount?.toStringAsFixed(2) ?? 0.0}",
-                              style: textBody1,
-                              textAlign: TextAlign.end,
+                  child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(child: Container()),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                    "Valor Total: R\$ ${widget.product?.amount?.toStringAsFixed(2) ?? 0.0}",
+                                    style: textBody1,
+                                    textAlign: TextAlign.end,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      AppTextFormField(
-                        refKey: _nameKey,
-                        labelText: 'Nome',
-                        hintText: 'Bolo do pote',
-                        controller: _nameController,
-                        isEnable: true,
-                        onSaved: (String? value) async {
-                          _enableButton();
-                          store.updateName(value ?? "");
-                        },
-                      ),
-                      Container(height: 16.0,),
-                      AppTextFormField(
-                        refKey: _percentKey,
-                        labelText: 'Porcentagem de lucro',
-                        hintText: '40',
-                        controller: _percentController,
-                        isEnable: true,
-                        isPercentage: true,
-                        onSaved: (String? value) async {
-                          _enableButton();
-                          if (_percentKey.currentState?.validate() == true) {
-                            if (value != null)
-                              store.updatePercent((double.tryParse(value) ?? 0.0), null);
-                          }
-                        },
-                        suffixText: "%",
-                        textInputType: TextInputType.number,
-                      ),
-                      Container(height: 16,),
-                      Expanded(
-                        child: ListView(
-                          padding: EdgeInsets.zero,
-                          scrollDirection: Axis.vertical,
-                          children: _ingredients(data.ingredients ?? []),
+                            AppTextFormField(
+                              refKey: _nameKey,
+                              labelText: 'Nome',
+                              hintText: 'Bolo do pote',
+                              controller: _nameController,
+                              isEnable: true,
+                              onSaved: (String? value) async {
+                                _enableButton();
+                                store.updateName(value ?? "");
+                              },
+                            ),
+                            Container(height: 16.0,),
+                            AppTextFormField(
+                              refKey: _percentKey,
+                              labelText: 'Porcentagem de lucro',
+                              hintText: '40',
+                              controller: _percentController,
+                              isEnable: true,
+                              isPercentage: true,
+                              onSaved: (String? value) async {
+                                _enableButton();
+                                if (_percentKey.currentState?.validate() == true) {
+                                  if (value != null)
+                                    store.updatePercent((double.tryParse(value) ?? 0.0), null);
+                                }
+                              },
+                              suffixText: "%",
+                              textInputType: TextInputType.number,
+                            ),
+                            Container(height: 16,),
+                            Flexible(
+                              fit: FlexFit.loose,
+                              child: ListView(
+                                primary: false,
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                padding: EdgeInsets.zero,
+                                scrollDirection: Axis.vertical,
+                                children: _ingredients(data.ingredients ?? []),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+
                   ),
                 ),
               ),
