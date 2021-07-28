@@ -46,10 +46,10 @@ class IngredientIntoIngredientStore extends NotifierStore<Exception, IngredientE
 
 
   Future<void> addIngredient(IngredientEntity ingredient) async {
-    var newState = this.state;
-    if (newState.ingredients == null) newState.ingredients = [];
-    newState.ingredients?.add(ingredient);
-    _updateValue(newState.ingredients);
+    if (ingredientEntity?.ingredients == null) ingredientEntity?.ingredients = [];
+    ingredientEntity?.ingredients?.add(ingredient);
+    await ingredientEntity?.save();
+    await _updateValue(ingredientEntity?.ingredients);
   }
 
   Future<void> _updateValue(List<IngredientEntity>? ingredients) async {
