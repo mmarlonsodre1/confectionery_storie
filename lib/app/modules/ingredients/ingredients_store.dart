@@ -23,23 +23,31 @@ class IngredientsStore extends NotifierStore<Exception, List<IngredientEntity>> 
       var ingredientList = _ingredientBox.values.whereType<IngredientEntity>().toList();
       ingredientList.forEach((element) {
         element.ingredients?.removeWhere((element1) => element1.id == ingredient.id);
+        _updateIngredientValue(element);
       });
 
       var productList = _ingredientBox.values.whereType<ProductEntity>().toList();
-      productList.forEach((element) {
+      productList.forEach((element) async {
         element.ingredients?.removeWhere((element1) => element1.id == ingredient.id);
-        _updateValue(element);
+        await _updateProductValue(element);
       });
       _lastDeleteIngredient = ingredient;
       await getIngredients();
     }
   }
 
-  Future<void> _updateValue(ProductEntity product) async {
+  Future<void> _updateProductValue(ProductEntity product) async {
     var value = 0.0;
     product.ingredients?.forEach((element) {value += element.amount ?? 0.0;});
     product.amount = value;
-    product.save();
+    await product.save();
+  }
+
+  Future<void> _updateIngredientValue(IngredientEntity ingredient) async {
+    var value = 0.0;
+    ingredient.ingredients?.forEach((element) {value += element.amount ?? 0.0;});
+    ingredient.amount = value;
+    await ingredient.save();
   }
 
   @override

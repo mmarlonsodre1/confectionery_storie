@@ -1,5 +1,6 @@
 import 'package:confectionery_storie/app/modules/ingredients/create_ingredient/create_ingredient_entity.dart';
 import 'package:confectionery_storie/app/modules/ingredients/ingredient_entity.dart';
+import 'package:confectionery_storie/app/modules/products/product_entity.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:hive/hive.dart';
 
@@ -20,7 +21,17 @@ class CreateIngredientStore extends NotifierStore<Exception, CreateIngredientEnt
       ingredientEntity.amount = amount;
       ingredientEntity.hasMustIngredients = hasMustIngredients;
       ingredientEntity.unity = hasMustIngredients ? 3 : unity;
-      ingredientEntity.save();
+      await ingredientEntity.save();
+
+      var ingredientList = _ingredientBox.values.whereType<IngredientEntity>().toList();
+      ingredientList.forEach((element) async {
+        if (element.hasMustIngredients == true) await _updateIngredientValue(element, ingredientEntity);
+      });
+
+      var productList = _ingredientBox.values.whereType<ProductEntity>().toList();
+      productList.forEach((element) async {
+        await _updateProductValue(element, ingredientEntity);
+      });
     } else {
       state.name = name;
       state.quantity = quantity;
@@ -36,5 +47,45 @@ class CreateIngredientStore extends NotifierStore<Exception, CreateIngredientEnt
       _ingredientBox.put(id, ingredient);
     }
     update(state);
+  }
+
+  Future<void> _updateProductValue(ProductEntity product, IngredientEntity updatetedIngredient) async {
+    var value = 0.0;
+    product.ingredients?.forEach((element) {
+      var amount = 0.0;
+      if (element.id == updatetedIngredient.id) {
+        amount = ((updatetedIngredient.amount ?? 0.0)
+            / (updatetedIngredient.quantity ?? 0.0)) *
+            (element.quantity ?? 0.0);
+
+        updatetedIngredient.quantity = element.quantity;
+        value += amount;
+      } else value += element.amount ?? 0.0;
+    });
+    product.amount = value;
+    product.ingredients?.removeWhere((element1) => element1.id == updatetedIngredient.id);
+    if(product.ingredients == null) product.ingredients = [];
+    product.ingredients?.add(updatetedIngredient);
+    await product.save();
+  }
+
+  Future<void> _updateIngredientValue(IngredientEntity ingredient, IngredientEntity updatetedIngredient) async {
+    var value = 0.0;
+    ingredient.ingredients?.forEach((element) {
+      var amount = 0.0;
+      if (element.id == updatetedIngredient.id) {
+        amount = ((updatetedIngredient.amount ?? 0.0)
+            / (updatetedIngredient.quantity ?? 0.0)) *
+            (element.quantity ?? 0.0);
+
+        updatetedIngredient.quantity = element.quantity;
+        value += amount;
+      } else value += element.amount ?? 0.0;
+    });
+    ingredient.amount = value;
+    ingredient.ingredients?.removeWhere((element1) => element1.id == updatetedIngredient.id);
+    if(ingredient.ingredients == null) ingredient.ingredients = [];
+    ingredient.ingredients?.add(updatetedIngredient);
+    await ingredient.save();
   }
 }
