@@ -1,16 +1,17 @@
+import 'package:confectionery_storie/app/models/ingredient_entity.dart';
+import 'package:confectionery_storie/app/models/product_entity.dart';
 import 'package:confectionery_storie/app/modules/ingredients/create_ingredient/create_ingredient_entity.dart';
-import 'package:confectionery_storie/app/modules/ingredients/ingredient_entity.dart';
-import 'package:confectionery_storie/app/modules/products/product_entity.dart';
-import 'package:flutter_triple/flutter_triple.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 
-class CreateIngredientStore extends NotifierStore<Exception, CreateIngredientEntity> {
+class CreateIngredientStore extends ValueNotifier<CreateIngredientEntity> {
   CreateIngredientStore() : super(CreateIngredientEntity());
 
   var _ingredientBox = Hive.box('box');
 
-  Future<void> setUnity(int unity) async {
-    update(CreateIngredientEntity()..unity = unity);
+  void setUnity(int unity) {
+    value = value.copyWith(unity: unity);
+    notifyListeners();
   }
 
   Future<void> postIngredient(String name, int unity, double quantity,
@@ -33,11 +34,13 @@ class CreateIngredientStore extends NotifierStore<Exception, CreateIngredientEnt
         await _updateProductValue(element, ingredientEntity);
       });
     } else {
-      state.name = name;
-      state.quantity = quantity;
-      state.amount = amount;
-      state.hasMustIngredients = hasMustIngredients;
-      var ingredient = IngredientEntity(name, hasMustIngredients ? 3 : unity, quantity, amount, hasMustIngredients, null);
+      value = value.copyWith(
+        name: name,
+        quantity: quantity,
+        amount: amount,
+        hasMustIngredients: hasMustIngredients,
+      );
+      var ingredient = IngredientEntity(name, hasMustIngredients ? 3 : unity, quantity, amount, hasMustIngredients, null, []);
       var id = DateTime
           .now()
           .toUtc()
@@ -46,7 +49,7 @@ class CreateIngredientStore extends NotifierStore<Exception, CreateIngredientEnt
       ingredient.id = id;
       _ingredientBox.put(id, ingredient);
     }
-    update(state);
+    notifyListeners();
   }
 
   Future<void> _updateProductValue(ProductEntity product, IngredientEntity updatetedIngredient) async {

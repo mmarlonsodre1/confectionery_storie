@@ -1,10 +1,10 @@
-import 'package:confectionery_storie/app/modules/ingredients/ingredient_entity.dart';
-import 'package:confectionery_storie/app/modules/products/product_entity.dart';
+import 'package:confectionery_storie/app/models/ingredient_entity.dart';
+import 'package:confectionery_storie/app/models/product_entity.dart';
 import 'package:confectionery_storie/app/utils/color.dart';
 import 'package:confectionery_storie/app/utils/text_style.dart';
 import 'package:flutter/material.dart';
 
-class SimpleProductWidget extends StatefulWidget {
+class SimpleProductWidget extends StatelessWidget {
   SimpleProductWidget({
     this.product,
     this.onTap,
@@ -15,11 +15,6 @@ class SimpleProductWidget extends StatefulWidget {
   final Function(ProductEntity?)? onTap;
   final Function(ProductEntity?) onDeleteAction;
 
-  @override
-  _SimpleProductWidgetState createState() => _SimpleProductWidgetState();
-}
-
-class _SimpleProductWidgetState extends State<SimpleProductWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -33,13 +28,13 @@ class _SimpleProductWidgetState extends State<SimpleProductWidget> {
         ),
         child: InkWell(
           onTap: () {
-            widget.onTap?.call(widget.product);
+            onTap?.call(product);
           },
           child: Dismissible(
             key: UniqueKey(),
             background: Container(color: red),
             onDismissed: (direction) {
-              widget.onDeleteAction.call(widget.product);
+              onDeleteAction.call(product);
             },
             child: Container(
               constraints: BoxConstraints(minHeight: 80),
@@ -52,11 +47,11 @@ class _SimpleProductWidgetState extends State<SimpleProductWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.product?.name ?? '',
+                            product?.name ?? '',
                             style: textBody1Bold,
                           ),
                           Text(
-                            "Valor: R\$ ${widget.product?.amount?.toStringAsFixed(2) ?? 0.0}",
+                            "Preço: R\$ ${product?.newAmount.toStringAsFixed(2) ?? 0.0}",
                             style: textBody1,
                           ),
                         ],

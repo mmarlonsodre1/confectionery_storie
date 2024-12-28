@@ -1,7 +1,7 @@
 import 'package:confectionery_storie/app/utils/text_style.dart';
 import 'package:flutter/material.dart';
 
-class IngredientCostWidget extends StatefulWidget {
+class IngredientCostWidget extends StatelessWidget {
   IngredientCostWidget({
     this.title,
     this.value,
@@ -10,11 +10,6 @@ class IngredientCostWidget extends StatefulWidget {
   final String? title;
   final double? value;
 
-  @override
-  _IngredientCostWidgetState createState() => _IngredientCostWidgetState();
-}
-
-class _IngredientCostWidgetState extends State<IngredientCostWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -31,14 +26,14 @@ class _IngredientCostWidgetState extends State<IngredientCostWidget> {
             Align(
               alignment: Alignment(-0.75, 0),
               child: Text(
-                widget.title ?? '',
+                title ?? '',
                 style: textBody1,
               ),
             ),
             Align(
               alignment: Alignment(0.86, 0),
               child: Text(
-                widget.value.toString(),
+                value.toString(),
                 style: textBody1,
               ),
             )

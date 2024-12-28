@@ -4,10 +4,11 @@ import 'package:confectionery_storie/app/utils/color.dart';
 import 'package:confectionery_storie/app/utils/text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_triple/flutter_triple.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'ingredient_entity.dart';
+
+import '../../models/ingredient_entity.dart';
 import 'ingredients_store.dart';
 
 class IngredientsPage extends StatefulWidget {
@@ -19,8 +20,10 @@ class IngredientsPage extends StatefulWidget {
   _IngredientsPageState createState() => _IngredientsPageState();
 }
 
-class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsStore> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+class _IngredientsPageState extends State<IngredientsPage> {
+  final IngredientsStore _store = IngredientsStore();
+  late List<IngredientEntity> _state;
+
   final _quantityKey = GlobalKey<FormState>();
   var _quantityController = new TextEditingController();
   bool _isEnableDialogButton = false;
@@ -28,7 +31,9 @@ class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsSto
   @override
   void initState() {
     super.initState();
-    store.getIngredients();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _store.getIngredients();
+    });
   }
 
   Future<void> _showQuantityDialog(IngredientEntity ingredient, BuildContext context) async {
@@ -78,7 +83,8 @@ class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsSto
                         quantity,
                         amount,
                         ingredient.hasMustIngredients,
-                        ingredient.ingredients
+                        ingredient.ingredients,
+                        ingredient.newIngredients,
                     );
                     newIngredient.id = ingredient.id;
                     Modular.to.pop();
@@ -93,11 +99,9 @@ class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsSto
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    List<SimpleIngredientWidget> _ingredients(List<IngredientEntity> items) {
-      return items.map((ingredient) =>
-          SimpleIngredientWidget(
+  List<SimpleIngredientWidget> _ingredients(List<IngredientEntity> items) {
+    return items.map((ingredient) =>
+        SimpleIngredientWidget(
           ingredient: ingredient,
           showPrice: true,
           onTap: (item) async {
@@ -107,81 +111,77 @@ class _IngredientsPageState extends ModularState<IngredientsPage, IngredientsSto
             else if (item?.hasMustIngredients == true) {
               await Modular.to.pushNamed(
                   "ingredient_into_ingredient", arguments: item);
-              store.getIngredients();
             } else if (item?.hasMustIngredients == false) {
               await Modular.to.pushNamed("create_ingredient", arguments: item);
-              store.getIngredients();
             }
+            _store.getIngredients();
           },
           onDeleteAction: (item) async {
-            await store.deleteIngredient(item, context);
-            setState(() {});
+            await _store.deleteIngredient(item, context);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('${ingredient.name} apagado(a)'),
                 duration: Duration(seconds: 3),
                 action: SnackBarAction(
                   label: 'Voltar ação',
-                  onPressed: () async {
-                    await store.undo();
-                    setState(() {});
-                  },
+                  onPressed: () => _store.undo(),
                 ),
               ),
             );
           },
-      )).toList();
-    }
+        )).toList();
+  }
 
-    return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        automaticallyImplyLeading: true,
-        title: Text(
-          'Ingredientes',
-          style: textTitle2,
-        ),
-        centerTitle: true,
-        elevation: 4,
-      ),
-      floatingActionButton: widget.isSelection == false
-        ? FloatingActionButton(
-          onPressed: () async {
-            await Modular.to.pushNamed("create_ingredient");
-            await store.getIngredients();
-            setState(() {});
-          },
-          backgroundColor: primaryColor,
-          elevation: 8,
-          child: FaIcon(
-            FontAwesomeIcons.plus,
-            color: white,
-            size: 24,
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: _store,
+      builder: (context, old) {
+        _state = _store.value;
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: primaryColor,
+            automaticallyImplyLeading: true,
+            title: Text(
+              'Ingredientes',
+              style: textTitle2.copyWith(color: Colors.white)
+            ),
+            centerTitle: true,
+            elevation: 4,
           ),
-        ) : Container(),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment(0, 0),
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                child: ScopedBuilder<IngredientsStore, Exception, List<IngredientEntity>>(
-                  store: store,
-                  onState: (_, data) {
-                    return ListView(
+          floatingActionButton: widget.isSelection == false
+            ? FloatingActionButton(
+              onPressed: () async {
+                await Modular.to.pushNamed("create_ingredient");
+                _store.getIngredients();
+              },
+              backgroundColor: primaryColor,
+              elevation: 8,
+              child: FaIcon(
+                FontAwesomeIcons.plus,
+                color: white,
+                size: 24,
+              ),
+            ) : Container(),
+          body: SafeArea(
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment(0, 0),
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
+                    child: ListView(
                       padding: EdgeInsets.zero,
                       scrollDirection: Axis.vertical,
-                      children: _ingredients(data),
-                    );
-                  }
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
+                      children: _ingredients(_state),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      }
     );
   }
 }

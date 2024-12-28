@@ -1,7 +1,7 @@
 import 'package:confectionery_storie/app/utils/text_style.dart';
 import 'package:flutter/material.dart';
 
-class GridButtonWidget extends StatefulWidget {
+class GridButtonWidget extends StatelessWidget {
   GridButtonWidget({
     this.title,
     this.onTap,
@@ -10,11 +10,6 @@ class GridButtonWidget extends StatefulWidget {
   final String? title;
   final GestureTapCallback? onTap;
 
-  @override
-  _GridButtonWidgetState createState() => _GridButtonWidgetState();
-}
-
-class _GridButtonWidgetState extends State<GridButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,12 +28,12 @@ class _GridButtonWidgetState extends State<GridButtonWidget> {
             borderRadius: BorderRadius.circular(12),
           ),
           child: InkWell(
-            onTap: widget.onTap,
+            onTap: onTap,
             child: Container(
               child: Align(
                 alignment: Alignment(0, 0),
                 child: Text(
-                  widget.title ?? '',
+                  title ?? '',
                   textAlign: TextAlign.center,
                   style: textTitle1
                 ),

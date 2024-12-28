@@ -1,49 +1,48 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ingredient_entity.dart';
+part of 'product_entity.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class IngredientEntityAdapter extends TypeAdapter<IngredientEntity> {
+class ProductEntityAdapter extends TypeAdapter<ProductEntity> {
   @override
-  final int typeId = 1;
+  final int typeId = 0;
 
   @override
-  IngredientEntity read(BinaryReader reader) {
+  ProductEntity read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return IngredientEntity(
+    return ProductEntity(
       fields[1] as String?,
-      fields[2] as int?,
+      fields[2] as double?,
       fields[3] as double?,
-      fields[4] as double?,
-      fields[5] as bool?,
-      (fields[6] as List?)?.cast<IngredientEntity>(),
+      (fields[4] as List?)?.cast<IngredientEntity>(),
+      fields[5] == null
+          ? []
+          : (fields[5] as List).cast<IngredientIntoAddictionEntity>(),
     )..id = fields[0] as String?;
   }
 
   @override
-  void write(BinaryWriter writer, IngredientEntity obj) {
+  void write(BinaryWriter writer, ProductEntity obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.unity)
-      ..writeByte(3)
-      ..write(obj.quantity)
-      ..writeByte(4)
       ..write(obj.amount)
+      ..writeByte(3)
+      ..write(obj.percent)
+      ..writeByte(4)
+      ..write(obj.ingredients)
       ..writeByte(5)
-      ..write(obj.hasMustIngredients)
-      ..writeByte(6)
-      ..write(obj.ingredients);
+      ..write(obj.newIngredients);
   }
 
   @override
@@ -52,7 +51,7 @@ class IngredientEntityAdapter extends TypeAdapter<IngredientEntity> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is IngredientEntityAdapter &&
+      other is ProductEntityAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

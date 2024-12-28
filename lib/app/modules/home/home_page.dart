@@ -1,9 +1,6 @@
 import 'package:confectionery_storie/app/components/grid_button_widget.dart';
-import 'package:confectionery_storie/app/modules/ingredients/ingredients_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'home_store.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -13,7 +10,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends ModularState<HomePage, HomeStore> {
+class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {

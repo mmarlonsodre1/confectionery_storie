@@ -3,9 +3,10 @@ import 'package:confectionery_storie/app/utils/color.dart';
 import 'package:confectionery_storie/app/utils/text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_triple/flutter_triple.dart';
-import '../ingredient_entity.dart';
+
+import '../../../models/ingredient_entity.dart';
 import 'create_ingredient_entity.dart';
 import 'create_ingredient_store.dart';
 
@@ -17,9 +18,10 @@ class CreateIngredientPage extends StatefulWidget {
   _CreateIngredientPageState createState() => _CreateIngredientPageState();
 }
 
-class _CreateIngredientPageState
-    extends ModularState<CreateIngredientPage, CreateIngredientStore> {
-  static final _scaffoldKey = new Key("scaffoldKey");
+class _CreateIngredientPageState extends State<CreateIngredientPage> {
+  final CreateIngredientStore _store = CreateIngredientStore();
+  late CreateIngredientEntity _state;
+
   var _nameController = new TextEditingController();
   static final GlobalKey<FormState> _nameKey =
       new GlobalKey<FormState>(debugLabel: "_nameKey");
@@ -44,12 +46,14 @@ class _CreateIngredientPageState
   @override
   void initState() {
     super.initState();
-    if (widget.ingredient != null) {
-      _nameController.text = widget.ingredient?.name ?? "";
-      _quantityController.text = widget.ingredient?.quantity.toString() ?? "";
-      _amountController.text = widget.ingredient?.amount.toString() ?? "";
-      store.setUnity(widget.ingredient?.unity ?? 0);
-    }
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (widget.ingredient != null) {
+        _nameController.text = widget.ingredient?.name ?? "";
+        _quantityController.text = widget.ingredient?.quantity.toString() ?? "";
+        _amountController.text = widget.ingredient?.amount.toString() ?? "";
+        _store.setUnity(widget.ingredient?.unity ?? 0);
+      }
+    });
   }
 
   Widget _showIngredientInfo(CreateIngredientEntity data) {
@@ -67,7 +71,7 @@ class _CreateIngredientPageState
               },
               groupValue: data.unity,
               onValueChanged: (int? index) {
-                store.setUnity(index ?? 0);
+                _store.setUnity(index ?? 0);
               }),
           Container(
             height: 32,
@@ -106,119 +110,123 @@ class _CreateIngredientPageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        automaticallyImplyLeading: true,
-        title: Text(
-          "Criar Ingrediente",
-          style: textTitle2,
-        ),
-        centerTitle: true,
-        elevation: 4,
-      ),
-      body: SafeArea(
-        child: Container(
-          child: Align(
-            alignment: Alignment(0, -1.0),
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
-              child: ScopedBuilder<CreateIngredientStore, Exception,
-                      CreateIngredientEntity>(
-                  store: store,
-                  onState: (_, data) {
-                    return LayoutBuilder(builder: (context, constraint) {
-                      return SingleChildScrollView(
-                        child: ConstrainedBox(
-                          constraints:
-                              BoxConstraints(minHeight: constraint.maxHeight),
-                          child: IntrinsicHeight(
-                            child: Column(
-                              children: [
-                                AppTextFormField(
-                                  refKey: _nameKey,
-                                  labelText: 'Nome',
-                                  hintText: 'Margarina',
-                                  controller: _nameController,
-                                  isEnable: true,
-                                  onSaved: (String? value) async {
-                                    _enableButton();
-                                  },
-                                ),
-                                Container(
-                                  height: 16,
-                                ),
-                                MergeSemantics(
-                                  child: ListTile(
-                                    title: const Text(
-                                        'Feito a partir de outros ingredientes?'),
-                                    trailing: CupertinoSwitch(
-                                      value: _hasMustIngredients,
-                                      onChanged: (bool value) {
-                                        setState(() {
-                                          _hasMustIngredients = value;
-                                        });
-                                        _enableButton();
-                                      },
-                                    ),
-                                    onTap: () {
+    return ListenableBuilder(
+      listenable: _store,
+      builder: (context, old) {
+        _state = _store.value;
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: primaryColor,
+            automaticallyImplyLeading: true,
+            title: Text(
+              "Criar Ingrediente",
+              style: textTitle2.copyWith(color: Colors.white)
+            ),
+            centerTitle: true,
+            elevation: 4,
+          ),
+          body: SafeArea(
+            child: Container(
+              child: Align(
+                alignment: Alignment(0, -1.0),
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+                  child: LayoutBuilder(builder: (context, constraint) {
+                    return SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints:
+                        BoxConstraints(minHeight: constraint.maxHeight),
+                        child: IntrinsicHeight(
+                          child: Column(
+                            children: [
+                              AppTextFormField(
+                                refKey: _nameKey,
+                                labelText: 'Nome',
+                                hintText: 'Margarina',
+                                controller: _nameController,
+                                isEnable: true,
+                                onSaved: (String? value) async {
+                                  _enableButton();
+                                },
+                              ),
+                              Container(
+                                height: 16,
+                              ),
+                              MergeSemantics(
+                                child: ListTile(
+                                  title: const Text(
+                                      'Feito a partir de outros ingredientes?'),
+                                  trailing: CupertinoSwitch(
+                                    value: _hasMustIngredients,
+                                    onChanged: (bool value) {
                                       setState(() {
-                                        _hasMustIngredients =
-                                            !_hasMustIngredients;
+                                        _hasMustIngredients = value;
                                       });
                                       _enableButton();
                                     },
                                   ),
+                                  onTap: () {
+                                    setState(() {
+                                      _hasMustIngredients =
+                                      !_hasMustIngredients;
+                                    });
+                                    _enableButton();
+                                  },
                                 ),
-                                !_hasMustIngredients
-                                    ? _showIngredientInfo(data)
-                                    : Container(),
-                                Expanded(
-                                  child: Container(),
+                              ),
+                              !_hasMustIngredients
+                                  ? _showIngredientInfo(_state)
+                                  : Container(),
+                              Expanded(
+                                child: Container(),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: CupertinoButton(
+                                  color: primaryColor,
+                                  child: Container(
+                                      width: double.maxFinite,
+                                      child: Align(
+                                          alignment: Alignment(0, 0),
+                                          child: Text(widget.ingredient != null
+                                              ? 'Atualizar Ingrediente'
+                                              : 'Criar ingrediente',
+                                            style: TextStyle(
+                                              color: Colors.white
+                                            ),
+                                          ))),
+                                  onPressed: _isEnableButton == true
+                                      ? () {
+                                    var quantity = double.tryParse(
+                                        _quantityController.text) ??
+                                        0.0;
+                                    var amount = double.tryParse(
+                                        _amountController.text) ??
+                                        0.0;
+                                    _store.postIngredient(
+                                        _nameController.text,
+                                        _state.unity,
+                                        quantity,
+                                        amount,
+                                        _hasMustIngredients,
+                                        widget.ingredient);
+                                    Modular.to.pop();
+                                  }
+                                      : null,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: CupertinoButton(
-                                    color: primaryColor,
-                                    child: Container(
-                                        width: double.maxFinite,
-                                        child: Align(
-                                            alignment: Alignment(0, 0),
-                                            child: Text(widget.ingredient != null
-                                                ? 'Atualizar Ingrediente'
-                                                : 'Criar ingrediente'))),
-                                    onPressed: _isEnableButton == true
-                                        ? () {
-                                            var quantity = double.tryParse(
-                                                    _quantityController.text) ??
-                                                0.0;
-                                            var amount = double.tryParse(
-                                                    _amountController.text) ??
-                                                0.0;
-                                            store.postIngredient(
-                                                _nameController.text,
-                                                data.unity,
-                                                quantity,
-                                                amount,
-                                                _hasMustIngredients,
-                                                widget.ingredient);
-                                            Modular.to.pop();
-                                          }
-                                        : null,
-                                  ),
-                                )
-                              ],
-                            ),
+                              )
+                            ],
                           ),
                         ),
-                      );
-                    });
-                  },),
+                      ),
+                    );
+                  })
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      }
     );
   }
 }
