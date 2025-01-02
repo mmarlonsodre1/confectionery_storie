@@ -1,4 +1,3 @@
-import 'package:confectionery_storie/app/models/ingredient_entity.dart';
 import 'package:confectionery_storie/app/models/product_entity.dart';
 import 'package:confectionery_storie/app/utils/color.dart';
 import 'package:confectionery_storie/app/utils/text_style.dart';

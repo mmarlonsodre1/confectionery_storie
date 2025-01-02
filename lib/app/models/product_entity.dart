@@ -24,22 +24,27 @@ class ProductEntity extends HiveObject{
 	@HiveField(5, defaultValue: [])
 	List<IngredientIntoAddictionEntity> newIngredients;
 
-	double get newAmount {
-		var price = 0.0;
+	double get cost {
 		var finalValue = 0.0;
 
 		var ingredientPrices = newIngredients.map((e) {
 			var ingredient = Hive.box('box').values.whereType<IngredientEntity>()
 					.where((item) => item.id == e.ingredientId).firstOrNull;
-			return (e.quantity / (ingredient?.quantity ?? 0.0)) * (ingredient?.amount ?? 0.0);
+			var hasMustIngredients = ingredient?.hasMustIngredients == true;
+			var amount = hasMustIngredients ? ingredient?.newAmount : ingredient?.amount;
+
+			if (hasMustIngredients) {
+				return e.quantity * (amount ?? 0.0);
+			}
+			return (e.quantity / (ingredient?.quantity ?? 0.0)) * (amount ?? 0.0);
 		});
 
-		ingredientPrices.forEach((element) => price += element);
-
-		if(percent == 0.0) finalValue = price;
-		else finalValue = price * (1 + (percent ?? 0)/100);
+		ingredientPrices.forEach((element) => finalValue += element);
 		return finalValue;
 	}
+
+	double get newAmount => percent == 0.0
+			? cost : cost * (1 + (percent ?? 0)/100);
 
 	ProductEntity(this.name, this.amount, this.percent, this.ingredients, this.newIngredients);
 }

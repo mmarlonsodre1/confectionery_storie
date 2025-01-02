@@ -76,14 +76,6 @@ class _CreateProductPageState extends State<CreateProductPage> {
       listenable: _store,
       builder: (context, old) {
         _state = _store.value;
-        var ingredientPrices = _state.newIngredients.map((e) {
-          var ingredient = _store.getIngredient(e.ingredientId);
-          return (e.quantity / (ingredient.quantity ?? 0.0)) * (ingredient.amount ?? 0.0);
-        });
-        var cost = 0.0;
-        if (ingredientPrices.isNotEmpty) {
-          cost = (ingredientPrices).reduce((a, b) => a + b);
-        }
 
         return Scaffold(
           appBar: AppBar(
@@ -131,7 +123,7 @@ class _CreateProductPageState extends State<CreateProductPage> {
                             textAlign: TextAlign.end,
                           ),
                           Text(
-                            "Custo: R\$ ${cost.toStringAsFixed(2)}",
+                            "Custo: R\$ ${_state.cost.toStringAsFixed(2)}",
                             style: textBody1,
                             textAlign: TextAlign.end,
                           ),

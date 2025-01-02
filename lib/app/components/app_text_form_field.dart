@@ -8,7 +8,7 @@ class AppTextFormField extends StatelessWidget {
   final String? suffixText;
   final bool? isEnable;
   final FormFieldSetter<String>? onSaved;
-  bool autoFocus;
+  final bool autoFocus;
   final ValueChanged<String>? onFieldSubmitted;
   final TextInputType textInputType;
   final String prefixText;

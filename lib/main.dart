@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:confectionery_storie/ads/ads_util.dart';
 import 'package:confectionery_storie/app/models/ingredient_into_addiction_entity.dart';
 import 'package:confectionery_storie/app/models/product_entity.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,9 @@ import 'app/models/ingredient_entity.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await AppTrackingTransparency.requestTrackingAuthorization();
+  initCasAiAds();
 
   //Chave de criptografia
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();

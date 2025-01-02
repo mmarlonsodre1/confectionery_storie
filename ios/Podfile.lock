@@ -1,17 +1,412 @@
 PODS:
+  - Ads-Global (6.4.0.6):
+    - Ads-Global/BUAdSDK (= 6.4.0.6)
+  - Ads-Global/BUAdSDK (6.4.0.6)
+  - app_tracking_transparency (0.0.1):
+    - Flutter
+  - AppLovinSDK (13.0.1)
+  - AppMetricaCore (5.9.0):
+    - AppMetricaCoreUtils (= 5.9.0)
+    - AppMetricaEncodingUtils (= 5.9.0)
+    - AppMetricaFMDB (= 5.9.0)
+    - AppMetricaHostState (= 5.9.0)
+    - AppMetricaIdentifiers (= 5.9.0)
+    - AppMetricaKeychain (= 5.9.0)
+    - AppMetricaLog (= 5.9.0)
+    - AppMetricaNetwork (= 5.9.0)
+    - AppMetricaPlatform (= 5.9.0)
+    - AppMetricaProtobuf (= 5.9.0)
+    - AppMetricaProtobufUtils (= 5.9.0)
+    - AppMetricaStorageUtils (= 5.9.0)
+  - AppMetricaCoreExtension (5.9.0):
+    - AppMetricaCore (= 5.9.0)
+    - AppMetricaStorageUtils (= 5.9.0)
+  - AppMetricaCoreUtils (5.9.0):
+    - AppMetricaLog (= 5.9.0)
+  - AppMetricaCrashes (5.9.0):
+    - AppMetricaCore (= 5.9.0)
+    - AppMetricaCoreExtension (= 5.9.0)
+    - AppMetricaCoreUtils (= 5.9.0)
+    - AppMetricaEncodingUtils (= 5.9.0)
+    - AppMetricaHostState (= 5.9.0)
+    - AppMetricaLog (= 5.9.0)
+    - AppMetricaPlatform (= 5.9.0)
+    - AppMetricaProtobufUtils (= 5.9.0)
+    - AppMetricaStorageUtils (= 5.9.0)
+    - KSCrash/Recording (< 2.1.0, >= 2.0.0-rc.1)
+  - AppMetricaEncodingUtils (5.9.0):
+    - AppMetricaCoreUtils (= 5.9.0)
+    - AppMetricaLog (= 5.9.0)
+    - AppMetricaPlatform (= 5.9.0)
+  - AppMetricaFMDB (5.9.0)
+  - AppMetricaHostState (5.9.0):
+    - AppMetricaCoreUtils (= 5.9.0)
+    - AppMetricaLog (= 5.9.0)
+  - AppMetricaIdentifiers (5.9.0):
+    - AppMetricaKeychain (= 5.9.0)
+    - AppMetricaLogSwift (= 5.9.0)
+    - AppMetricaPlatform (= 5.9.0)
+    - AppMetricaStorageUtils (= 5.9.0)
+    - AppMetricaSynchronization (= 5.9.0)
+  - AppMetricaKeychain (5.9.0):
+    - AppMetricaCoreUtils (= 5.9.0)
+    - AppMetricaLog (= 5.9.0)
+    - AppMetricaStorageUtils (= 5.9.0)
+  - AppMetricaLibraryAdapter (5.9.0):
+    - AppMetricaCore (= 5.9.0)
+    - AppMetricaCoreExtension (= 5.9.0)
+  - AppMetricaLog (5.9.0)
+  - AppMetricaLogSwift (5.9.0):
+    - AppMetricaLog (= 5.9.0)
+  - AppMetricaNetwork (5.9.0):
+    - AppMetricaCoreUtils (= 5.9.0)
+    - AppMetricaLog (= 5.9.0)
+    - AppMetricaPlatform (= 5.9.0)
+  - AppMetricaPlatform (5.9.0):
+    - AppMetricaCoreUtils (= 5.9.0)
+    - AppMetricaLog (= 5.9.0)
+  - AppMetricaProtobuf (5.9.0)
+  - AppMetricaProtobufUtils (5.9.0):
+    - AppMetricaProtobuf (= 5.9.0)
+  - AppMetricaStorageUtils (5.9.0):
+    - AppMetricaCoreUtils (= 5.9.0)
+    - AppMetricaLog (= 5.9.0)
+  - AppMetricaSynchronization (5.9.0):
+    - AppMetricaLogSwift (= 5.9.0)
+  - BigoADS (4.6.0)
+  - ChartboostSDK (9.8.0)
+  - clever_ads_solutions (0.7.5):
+    - CleverAdsSolutions-Base (~> 3.9.8)
+    - Flutter
+  - CleverAdsSolutions-Base (3.9.8)
+  - CleverAdsSolutions-Exchange (3.9.7):
+    - CleverAdsSolutions-Base
+  - CleverAdsSolutions-SDK/AppLovin (3.9.8):
+    - AppLovinSDK (= 13.0.1)
+    - CleverAdsSolutions-Base
+  - CleverAdsSolutions-SDK/AudienceNetwork (3.9.8):
+    - CleverAdsSolutions-SDK/GoogleAds (= 3.9.8)
+    - FBAudienceNetwork (= 6.15.2)
+  - CleverAdsSolutions-SDK/Bigo (3.9.8):
+    - BigoADS (= 4.6.0)
+    - CleverAdsSolutions-Base
+  - CleverAdsSolutions-SDK/CASExchange (3.9.8):
+    - CleverAdsSolutions-Base
+    - CleverAdsSolutions-Exchange (= 3.9.7)
+  - CleverAdsSolutions-SDK/Chartboost (3.9.8):
+    - ChartboostSDK (= 9.8.0)
+    - CleverAdsSolutions-Base
+  - CleverAdsSolutions-SDK/CrossPromo (3.9.8):
+    - CleverAdsSolutions-Base
+  - CleverAdsSolutions-SDK/DTExchange (3.9.8):
+    - CleverAdsSolutions-SDK/IronSource (= 3.9.8)
+    - Fyber_Marketplace_SDK (= 8.3.4)
+  - CleverAdsSolutions-SDK/GoogleAds (3.9.8):
+    - CleverAdsSolutions-SDK/IronSource (= 3.9.8)
+    - Google-Mobile-Ads-SDK (= 11.13.0)
+  - CleverAdsSolutions-SDK/HyprMX (3.9.8):
+    - CleverAdsSolutions-Base
+    - HyprMX (= 6.4.1)
+  - CleverAdsSolutions-SDK/InMobi (3.9.8):
+    - CleverAdsSolutions-Base
+    - InMobiSDK (= 10.8.0)
+  - CleverAdsSolutions-SDK/IronSource (3.9.8):
+    - CleverAdsSolutions-Base
+    - IronSourceSDK (= 8.5.1.0)
+  - CleverAdsSolutions-SDK/Kidoz (3.9.8):
+    - CleverAdsSolutions-Base
+    - KidozSDK (= 9.1.5)
+  - CleverAdsSolutions-SDK/LiftoffMonetize (3.9.8):
+    - CleverAdsSolutions-Base
+    - VungleAds (= 7.4.3)
+  - CleverAdsSolutions-SDK/LoopMe (3.9.8):
+    - CleverAdsSolutions-Base
+    - LoopMeUnitedSDK (= 7.4.23)
+  - CleverAdsSolutions-SDK/Madex (3.9.8):
+    - CleverAdsSolutions-Base
+    - MadexSDK (= 1.6.1)
+  - CleverAdsSolutions-SDK/Mintegral (3.9.8):
+    - CleverAdsSolutions-Base
+    - MintegralAdSDK (= 7.7.3)
+  - CleverAdsSolutions-SDK/Ogury (3.9.8):
+    - CleverAdsSolutions-Base
+    - OgurySdk (= 4.4.2)
+  - CleverAdsSolutions-SDK/Optimal (3.9.8):
+    - CleverAdsSolutions-Base (= 3.9.8)
+    - CleverAdsSolutions-SDK/AppLovin (= 3.9.8)
+    - CleverAdsSolutions-SDK/AudienceNetwork (= 3.9.8)
+    - CleverAdsSolutions-SDK/Bigo (= 3.9.8)
+    - CleverAdsSolutions-SDK/CASExchange (= 3.9.8)
+    - CleverAdsSolutions-SDK/Chartboost (= 3.9.8)
+    - CleverAdsSolutions-SDK/DTExchange (= 3.9.8)
+    - CleverAdsSolutions-SDK/GoogleAds (= 3.9.8)
+    - CleverAdsSolutions-SDK/InMobi (= 3.9.8)
+    - CleverAdsSolutions-SDK/IronSource (= 3.9.8)
+    - CleverAdsSolutions-SDK/LiftoffMonetize (= 3.9.8)
+    - CleverAdsSolutions-SDK/Mintegral (= 3.9.8)
+    - CleverAdsSolutions-SDK/Pangle (= 3.9.8)
+    - CleverAdsSolutions-SDK/UnityAds (= 3.9.8)
+    - CleverAdsSolutions-SDK/YandexAds (= 3.9.8)
+  - CleverAdsSolutions-SDK/Pangle (3.9.8):
+    - Ads-Global (= 6.4.0.6)
+    - CleverAdsSolutions-Base
+  - CleverAdsSolutions-SDK/Smaato (3.9.8):
+    - CleverAdsSolutions-SDK/IronSource (= 3.9.8)
+    - smaato-ios-sdk (= 22.8.4)
+    - smaato-ios-sdk/InApp (= 22.8.4)
+  - CleverAdsSolutions-SDK/StartIO (3.9.8):
+    - CleverAdsSolutions-Base
+    - StartAppSDK (= 4.10.3)
+  - CleverAdsSolutions-SDK/UnityAds (3.9.8):
+    - CleverAdsSolutions-SDK/IronSource (= 3.9.8)
+    - UnityAds (= 4.12.5)
+  - CleverAdsSolutions-SDK/YandexAds (3.9.8):
+    - CleverAdsSolutions-SDK/IronSource (= 3.9.8)
+    - YandexMobileAds (= 7.8.0)
+  - DivKit (30.32.0):
+    - DivKit_LayoutKit (= 30.32.0)
+    - DivKit_Serialization (= 30.32.0)
+    - VGSL (~> 6.0)
+  - DivKit_LayoutKit (30.32.0):
+    - DivKit_LayoutKitInterface (= 30.32.0)
+    - VGSL (~> 6.0)
+  - DivKit_LayoutKitInterface (30.32.0):
+    - VGSL (~> 6.0)
+  - DivKit_Serialization (30.32.0):
+    - VGSL (~> 6.0)
+  - DivKitBinaryCompatibilityFacade (4.5.0):
+    - DivKit (~> 30.9)
+  - FBAudienceNetwork (6.15.2)
   - Flutter (1.0.0)
   - flutter_secure_storage (6.0.0):
     - Flutter
+  - Fyber_Marketplace_SDK (8.3.4)
+  - Google-Mobile-Ads-SDK (11.13.0):
+    - GoogleUserMessagingPlatform (>= 1.1)
+  - GoogleUserMessagingPlatform (2.7.0)
+  - HyprMX (6.4.1):
+    - HyprMX/HyprMX-SDK (= 6.4.1)
+  - HyprMX/Core (6.4.1)
+  - HyprMX/HyprMX-SDK (6.4.1):
+    - HyprMX/Core
+  - InMobiSDK (10.8.0)
+  - IronSourceSDK (8.5.1.0)
+  - KidozSDK (9.1.5)
+  - KSCrash/Core (2.0.0-rc.8)
+  - KSCrash/Recording (2.0.0-rc.8):
+    - KSCrash/RecordingCore
+  - KSCrash/RecordingCore (2.0.0-rc.8):
+    - KSCrash/Core
+  - LoopMeUnitedSDK (7.4.23)
+  - MadexSDK (1.6.1):
+    - SspnetCore (~> 1.6.1)
+  - MintegralAdSDK (7.7.3):
+    - MintegralAdSDK/BannerAd (= 7.7.3)
+    - MintegralAdSDK/BidBannerAd (= 7.7.3)
+    - MintegralAdSDK/BidInterstitialVideoAd (= 7.7.3)
+    - MintegralAdSDK/BidNativeAd (= 7.7.3)
+    - MintegralAdSDK/BidNewInterstitialAd (= 7.7.3)
+    - MintegralAdSDK/BidRewardVideoAd (= 7.7.3)
+    - MintegralAdSDK/InterstitialVideoAd (= 7.7.3)
+    - MintegralAdSDK/NativeAd (= 7.7.3)
+    - MintegralAdSDK/NewInterstitialAd (= 7.7.3)
+    - MintegralAdSDK/RewardVideoAd (= 7.7.3)
+  - MintegralAdSDK/BannerAd (7.7.3):
+    - MintegralAdSDK/NativeAd
+  - MintegralAdSDK/BidBannerAd (7.7.3):
+    - MintegralAdSDK/BannerAd
+    - MintegralAdSDK/BidNativeAd
+  - MintegralAdSDK/BidInterstitialVideoAd (7.7.3):
+    - MintegralAdSDK/BidNativeAd
+    - MintegralAdSDK/InterstitialVideoAd
+  - MintegralAdSDK/BidNativeAd (7.7.3):
+    - MintegralAdSDK/NativeAd
+  - MintegralAdSDK/BidNewInterstitialAd (7.7.3):
+    - MintegralAdSDK/BidNativeAd
+    - MintegralAdSDK/NewInterstitialAd
+  - MintegralAdSDK/BidRewardVideoAd (7.7.3):
+    - MintegralAdSDK/BidNativeAd
+    - MintegralAdSDK/RewardVideoAd
+  - MintegralAdSDK/InterstitialVideoAd (7.7.3):
+    - MintegralAdSDK/NativeAd
+  - MintegralAdSDK/NativeAd (7.7.3)
+  - MintegralAdSDK/NewInterstitialAd (7.7.3):
+    - MintegralAdSDK/InterstitialVideoAd
+    - MintegralAdSDK/NativeAd
+  - MintegralAdSDK/RewardVideoAd (7.7.3):
+    - MintegralAdSDK/NativeAd
+  - OguryAds (3.7.2):
+    - OguryAds/OMID (= 3.7.2)
+    - OguryCore (= 1.4.1)
+  - OguryAds/OMID (3.7.2):
+    - OguryCore (= 1.4.1)
+  - OguryChoiceManager (4.3.0):
+    - OguryCore (= 1.4.1)
+  - OguryCore (1.4.1)
+  - OgurySdk (4.4.2):
+    - OguryCore (= 1.4.1)
+    - OgurySdk/OguryAds (= 4.4.2)
+    - OgurySdk/OguryChoiceManager (= 4.4.2)
+  - OgurySdk/OguryAds (4.4.2):
+    - OguryAds (= 3.7.2)
+    - OguryCore (= 1.4.1)
+  - OgurySdk/OguryChoiceManager (4.4.2):
+    - OguryChoiceManager (= 4.3.0)
+    - OguryCore (= 1.4.1)
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - smaato-ios-sdk (22.8.4):
+    - smaato-ios-sdk/Full (= 22.8.4)
+  - smaato-ios-sdk/Banner (22.8.4):
+    - smaato-ios-sdk/Modules/Banner
+    - smaato-ios-sdk/Modules/Core
+    - smaato-ios-sdk/Modules/RichMedia
+  - smaato-ios-sdk/Full (22.8.4):
+    - smaato-ios-sdk/Banner
+    - smaato-ios-sdk/Interstitial
+    - smaato-ios-sdk/Native
+    - smaato-ios-sdk/Outstream
+    - smaato-ios-sdk/RewardedAds
+  - smaato-ios-sdk/InApp (22.8.4):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Interstitial (22.8.4):
+    - smaato-ios-sdk/Modules/Interstitial
+    - smaato-ios-sdk/Modules/RichMedia
+    - smaato-ios-sdk/Modules/Video
+  - smaato-ios-sdk/Modules/Banner (22.8.4):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Modules/Core (22.8.4)
+  - smaato-ios-sdk/Modules/Interstitial (22.8.4):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Modules/Native (22.8.4):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Modules/OpenMeasurement (22.8.4):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Modules/Outstream (22.8.4):
+    - smaato-ios-sdk/Modules/Banner
+    - smaato-ios-sdk/Modules/Core
+    - smaato-ios-sdk/Modules/RichMedia
+  - smaato-ios-sdk/Modules/RewardedAds (22.8.4):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Modules/RichMedia (22.8.4):
+    - smaato-ios-sdk/Modules/Core
+    - smaato-ios-sdk/Modules/OpenMeasurement
+  - smaato-ios-sdk/Modules/Video (22.8.4):
+    - smaato-ios-sdk/Modules/Core
+    - smaato-ios-sdk/Modules/OpenMeasurement
+  - smaato-ios-sdk/Native (22.8.4):
+    - smaato-ios-sdk/Modules/Core
+    - smaato-ios-sdk/Modules/Native
+  - smaato-ios-sdk/Outstream (22.8.4):
+    - smaato-ios-sdk/Modules/Outstream
+  - smaato-ios-sdk/RewardedAds (22.8.4):
+    - smaato-ios-sdk/Modules/RewardedAds
+    - smaato-ios-sdk/Modules/Video
+  - SspnetCore (1.6.1):
+    - SspnetDsp (~> 1.3.1)
+  - SspnetDsp (1.3.1)
+  - StartAppSDK (4.10.3)
+  - UnityAds (4.12.5)
+  - VGSL (6.16.1):
+    - VGSLFundamentals (= 6.16.1)
+    - VGSLNetworking (= 6.16.1)
+    - VGSLUI (= 6.16.1)
+  - VGSLFundamentals (6.16.1)
+  - VGSLNetworking (6.16.1):
+    - VGSLFundamentals (= 6.16.1)
+    - VGSLUI (= 6.16.1)
+  - VGSLUI (6.16.1):
+    - VGSLFundamentals (= 6.16.1)
+  - VungleAds (7.4.3)
+  - YandexMobileAds (7.8.0):
+    - AppMetricaCore (< 6.0.0, >= 5.8.0)
+    - AppMetricaCrashes (< 6.0.0, >= 5.8.0)
+    - AppMetricaLibraryAdapter (< 6.0.0, >= 5.8.0)
+    - DivKitBinaryCompatibilityFacade (= 4.5.0)
 
 DEPENDENCIES:
+  - app_tracking_transparency (from `.symlinks/plugins/app_tracking_transparency/ios`)
+  - clever_ads_solutions (from `.symlinks/plugins/clever_ads_solutions/ios`)
+  - CleverAdsSolutions-SDK/CrossPromo (= 3.9.8)
+  - CleverAdsSolutions-SDK/HyprMX (= 3.9.8)
+  - CleverAdsSolutions-SDK/Kidoz (= 3.9.8)
+  - CleverAdsSolutions-SDK/LoopMe (= 3.9.8)
+  - CleverAdsSolutions-SDK/Madex (= 3.9.8)
+  - CleverAdsSolutions-SDK/Ogury (= 3.9.8)
+  - CleverAdsSolutions-SDK/Optimal (= 3.9.8)
+  - CleverAdsSolutions-SDK/Smaato (= 3.9.8)
+  - CleverAdsSolutions-SDK/StartIO (= 3.9.8)
   - Flutter (from `Flutter`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
 
+SPEC REPOS:
+  https://github.com/cleveradssolutions/CAS-Specs.git:
+    - CleverAdsSolutions-Base
+    - CleverAdsSolutions-Exchange
+    - CleverAdsSolutions-SDK
+  https://github.com/CocoaPods/Specs.git:
+    - Ads-Global
+    - AppLovinSDK
+    - AppMetricaCore
+    - AppMetricaCoreExtension
+    - AppMetricaCoreUtils
+    - AppMetricaCrashes
+    - AppMetricaEncodingUtils
+    - AppMetricaFMDB
+    - AppMetricaHostState
+    - AppMetricaIdentifiers
+    - AppMetricaKeychain
+    - AppMetricaLibraryAdapter
+    - AppMetricaLog
+    - AppMetricaLogSwift
+    - AppMetricaNetwork
+    - AppMetricaPlatform
+    - AppMetricaProtobuf
+    - AppMetricaProtobufUtils
+    - AppMetricaStorageUtils
+    - AppMetricaSynchronization
+    - BigoADS
+    - ChartboostSDK
+    - DivKit
+    - DivKit_LayoutKit
+    - DivKit_LayoutKitInterface
+    - DivKit_Serialization
+    - DivKitBinaryCompatibilityFacade
+    - FBAudienceNetwork
+    - Fyber_Marketplace_SDK
+    - Google-Mobile-Ads-SDK
+    - GoogleUserMessagingPlatform
+    - HyprMX
+    - InMobiSDK
+    - IronSourceSDK
+    - KidozSDK
+    - KSCrash
+    - LoopMeUnitedSDK
+    - MadexSDK
+    - MintegralAdSDK
+    - OguryAds
+    - OguryChoiceManager
+    - OguryCore
+    - OgurySdk
+    - smaato-ios-sdk
+    - SspnetCore
+    - SspnetDsp
+    - StartAppSDK
+    - UnityAds
+    - VGSL
+    - VGSLFundamentals
+    - VGSLNetworking
+    - VGSLUI
+    - VungleAds
+    - YandexMobileAds
+
 EXTERNAL SOURCES:
+  app_tracking_transparency:
+    :path: ".symlinks/plugins/app_tracking_transparency/ios"
+  clever_ads_solutions:
+    :path: ".symlinks/plugins/clever_ads_solutions/ios"
   Flutter:
     :path: Flutter
   flutter_secure_storage:
@@ -20,10 +415,69 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
 
 SPEC CHECKSUMS:
+  Ads-Global: d5c88331f0424e7ccb523e55364651072bd2a041
+  app_tracking_transparency: e169b653478da7bb15a6c61209015378ca73e375
+  AppLovinSDK: fdae6a4361c9c9b09f8d7d18ede792368221d987
+  AppMetricaCore: cdad94c505967ebac86f81da48841df3136ef696
+  AppMetricaCoreExtension: b9c8695bac86ec7f4ef90f905131f7b9d31d8295
+  AppMetricaCoreUtils: 3c7aa8a78895f98f557f1bc88bce4eb80a6bcd2a
+  AppMetricaCrashes: 7641b5c23c581693e6c8ae253948635f8f3ff071
+  AppMetricaEncodingUtils: 61f9fd1c510e517e2b4981b940bc510f9498e1bc
+  AppMetricaFMDB: 743a9d6833380eebfa0ca0f1db2883bb05b41c16
+  AppMetricaHostState: 5c9196539244397f7fb8a4db44bddc1bbc67b93b
+  AppMetricaIdentifiers: b870d30d6a5acd9cc9df9e30a37e4bf8a0e03a25
+  AppMetricaKeychain: 767acc62243599c034bab686093640b3e86d3893
+  AppMetricaLibraryAdapter: 73d0a414a7bf691c4a52c45c83652d150e571def
+  AppMetricaLog: 9fdc87723f6a1b497866f6827143117d7ff667c4
+  AppMetricaLogSwift: 9d67b9ce5097cfed6ff56a6a4ec7770f2ce2df07
+  AppMetricaNetwork: 81342ff33cd3786bcdbe06c5b580179aec7c95c2
+  AppMetricaPlatform: cb4699122820183ce3dc29fc386bada3afde99d5
+  AppMetricaProtobuf: 8d9ad65007f56af94b324dbc31096ee8be04d412
+  AppMetricaProtobufUtils: 33f29ccee2f898b537eece0c4fe04e14e1bdab9a
+  AppMetricaStorageUtils: 42c3f8163226516aec3e183db4f3e1a29fac1c41
+  AppMetricaSynchronization: ed4196effc6997921fab53503e79c6505dbae707
+  BigoADS: c4d9ec9cf6d3346843e126cdba111647ec402d9b
+  ChartboostSDK: f8422957daa675fa4a0bb9f159144b3b59ef5c27
+  clever_ads_solutions: 3d1314ee21dfd349d72055088e47fb0c1136828e
+  CleverAdsSolutions-Base: c8d695927f81b3c996df19b989b1bcd1b4eb3810
+  CleverAdsSolutions-Exchange: 779425320cd1fb414a06073718fca3dcb2b11b92
+  CleverAdsSolutions-SDK: cbc3083a745d810525ca42be276240c1b6076959
+  DivKit: 19ed5e1586633066e38359c056cf1f4137ecf2e9
+  DivKit_LayoutKit: 8c47c0db2dddb0264c5badd1514c5d02bbfad350
+  DivKit_LayoutKitInterface: 3ab758c17f9fff92b33a806eb75b829bfd9cde56
+  DivKit_Serialization: 95c264719514f744dd5adf5923c95282a31c2db8
+  DivKitBinaryCompatibilityFacade: 3de9fa5c024e2a8c1b798711c4c9aafd0be9b5c8
+  FBAudienceNetwork: 2457a89b45e2596241fd81b0c2fd8cb6f6053869
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
+  Fyber_Marketplace_SDK: 5561bb1adaa5c84130a2c0c2347eb71b4a357604
+  Google-Mobile-Ads-SDK: 14f57f2dc33532a24db288897e26494640810407
+  GoogleUserMessagingPlatform: a8b56893477f67212fbc8411c139e61d463349f5
+  HyprMX: 765e6ba823464bc01364001f550e2518290c594a
+  InMobiSDK: 0cfb1a1eb5112fa0236ae1fab549e31fb96c9566
+  IronSourceSDK: 3c6e6de07e53272c815f5150b7372115eba9df40
+  KidozSDK: adf3e1dbccca644d4b53c5c183caaed74c120b04
+  KSCrash: 946472c56073afdaf6bae37d886e3f562027075c
+  LoopMeUnitedSDK: 99b52f48d051d1fcbdf74c65c4706b9edf9647ec
+  MadexSDK: 1608df3f764789d72cb35118749870cde9a910b3
+  MintegralAdSDK: 217cca20529055c8791c82985dd7a74864e49fd0
+  OguryAds: 9cf45f0a34806cbf1e75c22f9c27b3310bc674d8
+  OguryChoiceManager: e416c5b9a3c10b8ce3beafeab687e72940c6fadd
+  OguryCore: 812c0a3e73317c2560ab7ce82998bbb04d0a2917
+  OgurySdk: f4eff44e2ddb44b0689aee2b8284b16d0f413013
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  smaato-ios-sdk: a00a2e3516951a7477945ea8babc7dde4a61a6ba
+  SspnetCore: e3bc8431621a604d747fa958e2dbf5c0412b0f0c
+  SspnetDsp: 2e8709bef0f11b8af146c446e0638694ed9530c2
+  StartAppSDK: e25588e0434fc174266e6148c2e021f04c21767f
+  UnityAds: a4036ed911b4df2227d8137f4f777fcb86c4a2df
+  VGSL: a40f2993f90d8e5e3fc1dd66c6ce77610fe38430
+  VGSLFundamentals: e92b0ba52576655011532734fa45b03ca860519d
+  VGSLNetworking: 59b478c58ada10881eef3ef7d4fa1fbbeb0d4554
+  VGSLUI: c9941293df1081a674f35f75ee006e14121d724a
+  VungleAds: 15e589a3e1c3a5d1ca4617154bcca3bc0b6c1167
+  YandexMobileAds: ee0476033c0f2591fde830329a97d4e42b313821
 
-PODFILE CHECKSUM: c4c93c5f6502fe2754f48404d3594bf779584011
+PODFILE CHECKSUM: 3e155c93f4d2705b781085d0680e4817fe71a99b
 
 COCOAPODS: 1.16.2
